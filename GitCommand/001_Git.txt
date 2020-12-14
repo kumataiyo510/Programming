@@ -63,6 +63,7 @@ Git操作
 			//ブランチを作成する
 			git branch
 			//ブランチの一覧を表示、*でカレントブランチがどこにあるのか表示
+			git branch --all //remoteも含めてブランチ情報を取得
 			git checkout <BRANCHNAME>
 			//カレントブランチの切り替え
 			git checkout -- {FILENAME}
@@ -76,4 +77,10 @@ Git操作
 			git commit --amend
 			//直前のコミットを修正する
 			//コメントやコミットファイルなど
-			
+
+gitk       //guiでbranchの状況等を確認できる
+git log    //ローカルのcommitのログを確認できる
+git status //commitする必要があるかなどを確認できる。
+git remote get-url origin //originのurlを確認できる
+
+git issue1
