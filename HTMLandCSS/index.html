@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<title>トップページ</title>
+		<meta charset="utf-8">
+		<meta name="keywords" content="toppage">
+		<meta name="description" content="description of the site">
+	</head>
+	<body>
+		<ul>
+		<li>プログラミング</li>
+			<ul>
+			<div onclick="obj=document.getElementById('ide').style; obj.display=(obj.display=='none')?'block':'none';">
+				<a style="cursor:pointer;"><li>統合開発環境</li></a>
+			</div>
+			<div id="ide" style="display:none;clear:both;">
+				<ul>
+				<li>VisualStudio</li>
+				<li>Eclipse</li>
+				<li>Preades</li>
+				</ul>
+			</div>
+			<li><a href = "./cording/002_html"> HTML</a></li>
+			<li>CSS</li>
+			<li>JavaScript</li>
+			<li>SQL</li>
+			<li>C</li>
+			<li>Java</li>
+			<li>PowerShell</li>
+			<li>アセンブラ</li>
+			<li>VisualBasic</li>
+			</ul>
+		<li>OS</li>
+			<ul>
+			<li>Windows</li>
+			<div onclick="obj=document.getElementById('linux').style; obj.display=(obj.display=='none')?'block':'none';">
+				<a style="cursor:pointer;"><li>Linux</li></a>
+			</div>
+			<div id="linux" style="display:none;clear:both;">
+				<ul>
+				<li>Distribution</li>
+					<ul>
+					<li>Debian</li>
+					<li>RHEL</li>
+					</ul>
+				</ul>
+			</div>
+			</ul>
+		<li>ネットワーク</li>
+			<ul>
+			<li>概要</li>
+			<div onclick="obj=document.getElementById('networkdevice').style; obj.display=(obj.display=='none')?'block':'none';">
+				<a style="cursor:pointer;"><li>機器</li></a>
+			</div>
+			<div id="networkdevice" style="display:none;clear:both;">
+				<ul>
+				<li>ルーター</li>
+					<ul>
+					<li>無線機器</li>
+					</ul>
+				<li>スイッチ</li>
+				<li>ファイヤーウォール</li>
+				<li>サーバー</li>
+				</ul>
+			</div>
+			</ul>
+		<li>IT知識全般
+			<ul>
+			<div onclick="obj=document.getElementById('hardware').style; obj.display=(obj.display=='none')?'block':'none';">
+				<a style="cursor:pointer;"><li>ハードウェア</li></a>
+			</div>
+			<div id="hardware" style="display:none;clear:both;">
+				<ul>
+				<li>CPU</li>
+					<ul>
+					<li>演算装置</li>
+					<li>制御装置</li>
+					</ul>
+				<li>記憶装置</li>
+					<ul>
+					<li>主記憶装置</li>
+					<li>補助記憶装置</li>
+					</ul>
+				<li>出力装置</li>
+				<li>入力装置</li>
+				</ul>
+			</div>
+			<div onclick="obj=document.getElementById('virtualmachine').style; obj.display=(obj.display=='none')?'block':'none';">
+				<a style="cursor:pointer;"><li>仮想化</li></a>
+			</div>
+			<div id="virtualmachine" style="display:none;clear:both;">
+				<ul>
+				<li>VMware</li>
+				<li>Hyper-V</li>
+				</ul>
+			</div>
+			<div onclick="obj=document.getElementById('versioning').style; obj.display=(obj.display=='none')?'block':'none';">
+				<a style="cursor:pointer;"><li>バージョン管理ツール</li></a>
+			</div>
+			<div id="versioning" style="display:none;clear:both">
+				<ul>
+				<li>Git</li>
+				</ul>
+			</div>
+			<div onclick="obj=document.getElementById('cloud').style; obj.display=(obj.display=='none')?'block':'none';">
+				<a style="cursor:pointer;"><li>クラウド</li></a>
+			</div>
+			<div id="cloud" style="display:none;clear:both;">
+				<ul>
+				<li>AWS</li>
+				<li>Azure</li>
+				<li>Google Cloud Platform</li>
+				</ul>
+			</div>
+			</ul>
+		</ul>
+	</body>
+</html>
