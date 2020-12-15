@@ -9,6 +9,8 @@
     <canvas id="can"></canvas>
 </body>
 <script>
+    //落ちるスピード
+    const GAME_SPEED = 1000;
     //フィールドサイズ
     const FIELD_COL = 10;
     const FIELD_ROW = 20;
@@ -65,6 +67,8 @@
     init();
     drawAll();
 
+    setInterval(dropTetro, GAME_SPEED);
+
     //ブロックひとつを描画する関数
     function drawBlock(x, y)
     {
@@ -112,16 +116,17 @@
         {
             for(let x=0; x<TETRO_SIZE; x++)
             {
-                let nx = tetro_x + mx + x;
-                let ny = tetro_y + my + y;
-
                 if (ntetro[y][x] == 1)
                 {
-                    if(field[ny][nx] == 1 ||
+                    let nx = tetro_x + mx + x;
+                    let ny = tetro_y + my + y;
+
+                    if(
                     ny < 0 ||
                     nx < 0 ||
                     ny >= FIELD_ROW ||
-                    nx >= FIELD_COL)
+                    nx >= FIELD_COL ||
+                    field[ny][nx] == 1)
                     {
                         return false;
                     }
@@ -145,6 +150,34 @@ function rotate()
         }
     }
     return ntetro;
+}
+
+//テトロミノの固定
+function fixTetro()
+{
+    for(let y=0; y<TETRO_SIZE; y++)
+    {
+        for(let x=0; x<TETRO_SIZE; x++)
+        {
+            if(tetro[y][x] == 1)
+            {
+                field[tetro_y + y][tetro_x + x] = 1;
+            }
+        }
+    }
+}
+
+//ブロックの自動落下
+function dropTetro()
+{
+    if(checkMove(0, 1))tetro_y++;
+    else
+    {
+        fixTetro();
+        tetro_x = 0;
+        tetro_y = 0;
+    }
+    drawAll();
 }
 
 //キーボードが押された時の処理
