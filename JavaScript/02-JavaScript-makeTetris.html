@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tetris</title>
 </head>
 <body>
     <canvas id="can"></canvas>
@@ -15,14 +15,14 @@
     //落ちるスピード
     const GAME_SPEED = 300;
 
-    //フィールドサイズ
+    //フィールドサイズ（１０列、２０行）
     const FIELD_COL = 10;
     const FIELD_ROW = 20;
 
     //ブロック一つのサイズ（ピクセル）
     const BLOCK_SIZE = 30;
 
-    //キャンバスサイズ
+    //キャンバスサイズ（ピクセル）
     const SCREEN_W = BLOCK_SIZE * FIELD_COL;
     const SCREEN_H = BLOCK_SIZE * FIELD_ROW;
 
@@ -40,7 +40,7 @@
         "#5B5",              //7緑
     ]
 
-    const TETRO_TYPES = [         //３次元配列
+    const TETRO_TYPES = [         //２次元配列
         [],               //0.空
         [                 //1.I
             [ 0, 0, 0, 0],
@@ -102,22 +102,25 @@
     //フィールドの本体
     let field = [];
 
+    //ゲームオーバーフラグ
     let over = false;
 
-    let can = document.getElementById("can");
-    let con = can.getContext("2d");
+    //canvas APIを呼び出す
+    //DOMとは「Document Object Model」の略だ。直訳すると、「ドキュメントを物として扱うモデル」になる。(HTMLをオブジェクトとして扱い操作することが可能になる)
+    let can = document.getElementById("can");  //Document の getElementById() メソッドは、 id プロパティが指定された文字列に一致する要素を表す Element オブジェクトを返します。
+    let con = can.getContext("2d");            //とってきた要素(Element）のgetContextにアクセスする。"2d"を指定することで2dの描画が可能になる 
 
-    can.width        = SCREEN_W;
+    can.width        = SCREEN_W;               //キャンバスなのでスクリーン
     can.height       = SCREEN_H;
     can.style.border = "4px solid #555"
 
-    tetro_t = Math.floor(Math.random() * (TETRO_TYPES.length - 1))+ 1;
+    tetro_t = Math.floor(Math.random() * (TETRO_TYPES.length - 1)) + 1;  //math.floor()切り捨て
     tetro = TETRO_TYPES[tetro_t];
 
     init();
     drawAll();
 
-    setInterval(dropTetro, GAME_SPEED);
+    setInterval(dropTetro, GAME_SPEED);        //GAME_SPEED間隔でdropTetro()を呼び出す
 
     //初期化の関数
     function init()
@@ -148,7 +151,7 @@
     //全体を描画する関数
     function drawAll()
     {
-        con.clearRect(0, 0, SCREEN_W, SCREEN_H);        
+        con.clearRect(0, 0, SCREEN_W, SCREEN_H);        //screenをコンテクストの属性（clearRect）で初期化する(startx, starty, endx, endy)
         
         for(let y=0; y<FIELD_ROW; y++)
         {
@@ -160,7 +163,7 @@
                 }
             }
         }       
-        for(let y=0; y<TETRO_SIZE; y++)　　　　//ここのletはローカルなので上で使っても再び使える
+        for(let y=0; y<TETRO_SIZE; y++)　　　　//ここのletはローカルなので上で使っても再び使える、テトロミノの表示を行う
         {
             for(let x=0; x<TETRO_SIZE; x++)
             {
