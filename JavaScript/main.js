@@ -55,6 +55,31 @@ document.onkeyup = function(e){
     key[e.keyCode] = false;
 }
 
+let tama = [];
+
+class Tama {
+    constructor(x, y, vx, vy){
+        this.sn   = 5;
+        this.x    = x;
+        this.y    = y;
+        this.vx   = vx;
+        this.vy   = vy;
+        this.kill = false;
+    }
+
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if(    this.x < 0 || this.x > FIELD_W<<8
+            || this.y < 0 || this.y > FIELD_H<<8)this.kill = true;
+    }
+
+    draw(){
+        drawSprite( this.sn, this.x, this.y);
+    }
+}
+
 class Jiki {
     constructor(){
         this.x = (FIELD_W / 2)<<8;
@@ -65,6 +90,9 @@ class Jiki {
     
     //自機の移動
     update(){
+        if(key[32]){
+            tama.push(new Tama(this.x, this.y, 0, -2000));   //arrayオブジェクトのメソッド"プッシュ"
+        }
         if(key[37] && this.x > this.speed){
             this.x -= this.speed; //左
             if(this.anime > -8)this.anime--;
@@ -94,6 +122,8 @@ let jiki = new Jiki();
 //イメージオブジェクトを作ってファイルを読み込む
 let spriteImage = new Image();
 spriteImage.src = "sprite.png";
+// spriteImage.src = "IMG_2147483647 (1395).png";
+// spriteImage.src = "character_04_sp.png";
 
 //スプライトクラス
 class Sprite {
@@ -107,12 +137,32 @@ class Sprite {
 
 //スプライト：sprite.pngの座標サイズ
 let sprite = [
-    new Sprite(  0, 0, 22, 48),
-    new Sprite( 23, 0, 33, 48),
-    new Sprite( 57, 0, 43, 48),
-    new Sprite(101, 0, 33, 48),
-    new Sprite(135, 0, 22, 48),
+    new Sprite(  0, 0, 22, 48),  //0 左２
+    new Sprite( 23, 0, 33, 48),  //1 左１
+    new Sprite( 57, 0, 43, 48),  //2 正面
+    new Sprite(101, 0, 33, 48),  //3 右１
+    new Sprite(135, 0, 22, 48),  //4 右２
+
+    new Sprite(0, 50, 3, 7),     //5 弾１
+    new Sprite(0, 50, 5, 5),     //6 弾２
+
 ];
+
+/* let sprite = [
+    new Sprite(  0, 0, 48, 46),
+    new Sprite(  0, 0, 48, 46),
+    new Sprite(  0, 0, 48, 46),
+    new Sprite(  0, 0, 48, 46),
+    new Sprite(  0, 0, 48, 46),
+]; */
+
+/* let sprite = [
+    new Sprite(  0, 0, 99, 165),
+    new Sprite(  0, 0, 99, 165),
+    new Sprite(  0, 0, 99, 165),
+    new Sprite(  0, 0, 99, 165),
+    new Sprite(  0, 0, 99, 165),
+]; */
 
 function drawSprite(snum, x, y){
     let sx = sprite[snum].x;
@@ -175,6 +225,10 @@ function gameInit(){
 function gameLoop(){
     //移動の処理
     for(let i = 0; i < STAR_MAX; i++)star[i].update();
+    for(let i = tama.length - 1; i >= 0; i--){
+        tama[i].update();
+        if(tama[i].kill)tama.splice(i, 1);
+    }
     jiki.update();
 
     //描画の処理
@@ -182,6 +236,7 @@ function gameLoop(){
     vcon.fillRect(camera_x, camera_y, SCREEN_W, SCREEN_H);
 
     for(let i = 0; i < STAR_MAX; i++)star[i].draw();
+    for(let i = 0; i < tama.length; i++)tama[i].draw();
     jiki.draw();
     
     //自機の範囲 0 ~ FIELD_W
