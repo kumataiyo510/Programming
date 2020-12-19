@@ -1,2 +1,2 @@
 # Programming
-For studying programming
+Studyint For programming
