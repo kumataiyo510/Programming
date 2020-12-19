@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="jp">
+<canvs width=300 height=300 id="ccc"></canvs>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="aaa">あああ</div>
+</body>
+<script>
+/*     for (var i = 0; i < 100; i++) 
+    {
+        var s;
+        if (i % 10 == 1)
+        {
+            s = "おやすみ"   
+        }
+        else
+        {
+            s = "おはよう"
+        }
+        document.write((i+1) + s + "<BR>");
+    } */
+
+
+/*     //変数について
+    x = 1;
+    score = 1000;
+    myName = "あきちょん"
+
+    document.write(myName + "おはようございます<BR>")
+    document.write("あなたの点数は" + score + "点です。<BR>")
+
+    //変数宣言 var let どちらでも使える
+    var x;
+    let y;
+    const CONSTOSCORE; //定数
+
+    //三項演算子 条件式?式1:式2; 下の式はxが1なら5をyに代入、xが1でなければ10をyに代入
+    y = (x == 1)?5:10;
+
+    //式と演算子　べき乗は"**"　比較演算子の等しいは"==" となり否定は"!=" 厳密に等しい（データ型まで同じか判断する）ときは"===" 厳密に等しくないときは"!=="
+    x = 2 ** 4 //2の4乗 */
+
+
+/*     //条件文 基本的にtrueもしくはfalseを判断するもの
+    //true:0 以外の数値、""じゃない文字列
+    //false：0、""、undefined、Not a Number、null
+    let x = 1;
+    let score = 1000;
+
+    if (condition)
+    {
+        statement;
+    }
+    else if (condition)
+    {
+        statement;
+    }
+    else
+    {
+        statement;
+    }
+    
+    //論理演算子
+    && は(AND)（論理積）
+    || は(OR)（論理和）
+    !  は(NOT)
+    if ( x == 1 || x == 2 && y == 10000) // この場合は論理積である&&が優先されて(X == 1 ( X == 2 && y == 10000))となる
+
+    switch (key) //主にconst で使用することが多い
+    {
+        case value:
+            statement;
+            break;
+        case value:
+        case value:
+            statement;
+            break;
+        default:
+            statement;
+            break;
+    } */
+
+
+/*     // for文とwhile文 回数がわかっているならfor わからないならwhile continueは後続処理を条件を満たす場合は飛ばす、breakは繰り返しから抜ける
+    for (let i = 0; i < 100; i++) //初期化式;条件式;加算式
+    {
+        document.write(i + "回目<BR>");
+    }
+
+    let j = 0     //初期化式
+    while (j < 100) //条件式
+    {
+        document.write(j + "while回目<BR>");
+        j++;      //加算式
+    }
+
+    for ( i = 0,  j = 10; i < 100, j >= 0; i++, j--) //初期化式;条件式;加算式
+    {
+        document.write("i" + i + "回目<BR>");
+        document.write("j" + j + "回目<BR>");
+    }
+
+    let flag = true     //初期化式
+    i = 0
+    while (flag) //条件式
+    {
+        i++;
+        if (i == 5)
+        {
+            document.write("5やないかーい<BR>")
+            flag = false
+        }
+        document.write(i + "<BR>")
+    } */
+
+
+/*     //関数
+    function hyouji()
+    {
+        document.write("おはよう");
+    }
+    hyouji(); */
+
+
+/*     //次回配列から 配列使うとfor や　while 回しやすい、２次元配列や３次元配列の利用も可能 name[[1,2,3,4],[11,22,33,44]]
+    let atest = [1, 11, 22];
+    //連想配列
+    let a = { name:"田中", weight:58, highth:150 }
+    document.write(a.name + "<BR>") */
+
+    
+/*     //クラス、オブジェクト指向
+    class person
+    {
+        constructor (name, height, weight)
+        {
+            this.name = name;
+            this.height = height;
+            this.weight = weight;
+        }
+        
+        printBMI()
+        {
+            let bmi = this.weight / (this.height /100) ** 2;
+            document.write(this.name + "さん、よろしくお願いいたします。<BR>");
+            document.write("身長は" + this.height + "cm<BR>");
+            document.write("体重は" + this.weight + "kg<BR>");
+            document.write("あなたのBMIは" + bmi + "です。<BR>");
+            document.write("<BR>");
+        }
+        eat( val)
+        {
+            document.write(this.name + "はご飯を食べる<BR>");
+            this.weight += val;
+            document.write(this.name + "の体重が" + val + "kg増えました<BR>");
+            document.write("現在の体重は" + this.weight + "に増加しています。<BR>");
+        }
+    }
+    let tanaka = new person("田中", 158, 50)
+    tanaka.printBMI();
+    tanaka.eat(1);
+    tanaka.printBMI(); */
+
+
+    //JavaScript API と DOM(DocumentObjectModel)
+    //よく使うビルトインオブジェクト　Number String boolean array date math　例)math.random()
+    //API DOM
+    document.title = "01-JavaScript";
+    let ele = document.getElementById("aaa");
+    ele.innerText = "いいいい";
+    //イベント　マウスの操作や、読み込みの完了等
+    //canvas　HTML5から、図形等の作図が可能
+
+</script>
+</html>
