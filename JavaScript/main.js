@@ -1,5 +1,4 @@
-//次回は（https://www.youtube.com/watch?v=88voLXjOaHs）から
-
+//次回は（https://www.youtube.com/watch?v=DA8IsiscQ9Q）から
 //ゲームスピード
 GAME_SPEED = 1000/60; //1秒(1000MS)を60で割ったもの、つまり60FPS
 
@@ -44,6 +43,54 @@ let camera_y = 0;
 //星の実体
 let star = [];
 
+let key = [];
+
+//キーボードが押されたとき
+document.onkeydown = function(e){
+    key[e.keyCode] = true;
+}
+
+//キーボードが話されたとき
+document.onkeyup = function(e){
+    key[e.keyCode] = false;
+}
+
+class Jiki {
+    constructor(){
+        this.x = (FIELD_W / 2)<<8;
+        this.y = (FIELD_H / 2)<<8;
+        this.speed = 512; //256で1Fに1pix動く
+        this.anime = 0;
+    }
+    
+    //自機の移動
+    update(){
+        if(key[37] && this.x > this.speed){
+            this.x -= this.speed; //左
+            if(this.anime > -8)this.anime--;
+        }
+        else if(key[39] && this.x <= (FIELD_W<<8) - this.speed){
+            this.x += this.speed; //右
+            if(this.anime < 8)this.anime++;
+        }
+        else {
+            if(this.anime>0) this.anime--;
+            if(this.anime<0) this.anime++;
+        }
+
+        if(key[38] && this.y >  this.speed)
+        this.y -= this.speed; //上
+        if(key[40] && this.y <= (FIELD_H<<8) - this.speed)
+        this.y += this.speed; //下
+    }
+
+    //自機の描画
+    draw(){
+        drawSprite(2 + (this.anime>>2), this.x, this.y);
+    }
+}
+let jiki = new Jiki();
+
 //イメージオブジェクトを作ってファイルを読み込む
 let spriteImage = new Image();
 spriteImage.src = "sprite.png";
@@ -60,11 +107,11 @@ class Sprite {
 
 //スプライト：sprite.pngの座標サイズ
 let sprite = [
-    new Sprite(  0, 0, 22, 42),
-    new Sprite( 23, 0, 33, 42),
-    new Sprite( 57, 0, 43, 42),
-    new Sprite(101, 0, 33, 42),
-    new Sprite(125, 0, 21, 42),
+    new Sprite(  0, 0, 22, 48),
+    new Sprite( 23, 0, 33, 48),
+    new Sprite( 57, 0, 43, 48),
+    new Sprite(101, 0, 33, 48),
+    new Sprite(135, 0, 22, 48),
 ];
 
 function drawSprite(snum, x, y){
@@ -73,8 +120,8 @@ function drawSprite(snum, x, y){
     let sw = sprite[snum].w;
     let sh = sprite[snum].h;
 
-    let px = (x >> 8) - sw / 2;
-    let py = (y >> 8) - sw / 2;
+    let px = (x>>8) - sw / 2;
+    let py = (y>>8) - sw / 2;
 
     if(    px + sw / 2 < camera_x || px - sw / 2 >= camera_x + SCREEN_W
         || py + sh / 2 < camera_y || py - sh / 2 >= camera_y + SCREEN_H
@@ -128,15 +175,21 @@ function gameInit(){
 function gameLoop(){
     //移動の処理
     for(let i = 0; i < STAR_MAX; i++)star[i].update();
+    jiki.update();
 
     //描画の処理
     vcon.fillStyle = "black";
-    vcon.fillRect(0, 0, SCREEN_W, SCREEN_H);
+    vcon.fillRect(camera_x, camera_y, SCREEN_W, SCREEN_H);
 
     for(let i = 0; i < STAR_MAX; i++)star[i].draw();
-
-    drawSprite(3, 0<<8, 0<<8);
+    jiki.draw();
     
+    //自機の範囲 0 ~ FIELD_W
+    //カメラの範囲 0 ~ (FIELD_W-SCREEN_W)
+    camera_x = (jiki.x>>8) / FIELD_W * (FIELD_W-SCREEN_W)
+    camera_y = (jiki.y>>8) / FIELD_H * (FIELD_H-SCREEN_H)
+
+
     //仮想画面から実際のキャンバスにコピー
     con.drawImage(vcan ,camera_x ,camera_y ,SCREEN_W, SCREEN_H, 0, 0, CANVAS_W, CANVAS_H);
 }
