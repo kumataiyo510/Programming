@@ -89,4 +89,6 @@ git status //commitする必要があるかなどを確認できる。
 git remote get-url origin //originのurlを確認できる
 git revert <commit> //<commit>のコミットを取り消すためのコミットを作る
 git reset --hard <commit> //<commit>時点の状態まで完全に巻き戻す
-git rebase 
+git rebase //rebase先のコミットを取り込んでから、今のブランチのコミットをマージする
+git merge --allow-unrelated-histories マージ先のブランチ名　//祖先を異にするブランチ同士のマージが可能になる
+git fetch //リモートリポジトリの変更状況をローカルに反映する
