@@ -121,9 +121,9 @@ let jiki = new Jiki();
 
 //イメージオブジェクトを作ってファイルを読み込む
 let spriteImage = new Image();
-spriteImage.src = "sprite.png";
-// spriteImage.src = "IMG_2147483647 (1395).png";
-// spriteImage.src = "character_04_sp.png";
+// spriteImage.src = "sprite.png";
+// spriteImage.src = "IMG_2147483647 (1395).png";   //さや
+spriteImage.src = "character_04_sp.png";            //プリキュア
 
 //スプライトクラス
 class Sprite {
@@ -136,7 +136,7 @@ class Sprite {
 }
 
 //スプライト：sprite.pngの座標サイズ
-let sprite = [
+/* let sprite = [
     new Sprite(  0, 0, 22, 48),  //0 左２
     new Sprite( 23, 0, 33, 48),  //1 左１
     new Sprite( 57, 0, 43, 48),  //2 正面
@@ -145,24 +145,31 @@ let sprite = [
 
     new Sprite(0, 50, 3, 7),     //5 弾１
     new Sprite(0, 50, 5, 5),     //6 弾２
+]; */
 
+//saya
+/* let sprite = [
+    new Sprite(  0, 0, 48, 46),
+    new Sprite(  0, 0, 48, 46),
+    new Sprite(  0, 0, 48, 46),
+    new Sprite(  0, 0, 48, 46),
+    new Sprite(  0, 0, 48, 46),
+
+    new Sprite(1, 46, 6, 51),     //5 弾１
+    new Sprite(1, 46, 6, 51),     //6 弾２
+]; */
+
+//prettycure
+let sprite = [
+    new Sprite(  0, 0, 99, 165),
+    new Sprite(  0, 0, 99, 165),
+    new Sprite(  0, 0, 99, 165),
+    new Sprite(  0, 0, 99, 165),
+    new Sprite(  0, 0, 99, 165),
+
+    new Sprite(0, 165, 5, 170),     //5 弾１
+    new Sprite(0, 165, 5, 170),     //6 弾２
 ];
-
-/* let sprite = [
-    new Sprite(  0, 0, 48, 46),
-    new Sprite(  0, 0, 48, 46),
-    new Sprite(  0, 0, 48, 46),
-    new Sprite(  0, 0, 48, 46),
-    new Sprite(  0, 0, 48, 46),
-]; */
-
-/* let sprite = [
-    new Sprite(  0, 0, 99, 165),
-    new Sprite(  0, 0, 99, 165),
-    new Sprite(  0, 0, 99, 165),
-    new Sprite(  0, 0, 99, 165),
-    new Sprite(  0, 0, 99, 165),
-]; */
 
 function drawSprite(snum, x, y){
     let sx = sprite[snum].x;
