@@ -92,3 +92,8 @@ git reset --hard <commit> //<commit>時点の状態まで完全に巻き戻す
 git rebase //rebase先のコミットを取り込んでから、今のブランチのコミットをマージする
 git merge --allow-unrelated-histories マージ先のブランチ名　//祖先を異にするブランチ同士のマージが可能になる
 git fetch //リモートリポジトリの変更状況をローカルに反映する
+git push --delete origin branch_name //リモートブランチの削除
+git stash save <message>　//変更を退避する
+git stash list　//退避した作業の一覧
+git stash apply stash@{0}　//退避した作業を元に戻す　stash名を指定しないと直前のstashが戻される
+git stash drop stash@{0}　//stash下作業を削除する
