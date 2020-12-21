@@ -1,4 +1,5 @@
-次回は（https://www.youtube.com/watch?v=1AL4sMN-3Xg//デバッグのフラグ）
+//次回は（https://www.youtube.com/watch?v=OdD0N3BV8mE)
+//デバッグのフラグ
 const DEBUG = true;
 
 //
@@ -64,6 +65,7 @@ let key = [];
 
 //オブジェクトたち
 let teki = [];
+let teta = [];
 let tama = [];
 let jiki = new Jiki();
 // teki[0] = new Teki(75, 200<<8, 200<<8, 0, 0);
@@ -100,6 +102,7 @@ function updateAll(){
     updateObj(star);
     updateObj(tama);
     updateObj(teki);
+    updateObj(teta);
     jiki.update();
 }
 
@@ -111,6 +114,7 @@ function drawAll(){
     drawObj(star);
     drawObj(tama);
     jiki.draw();
+    drawObj(teta);
     drawObj(teki);
 
     //自機の範囲 0 ~ FIELD_W
@@ -137,6 +141,7 @@ function putInfo(){
         con.fillText("FPS:"  + fps, 20, 20);
         con.fillText("Tama:" + tama.length, 20, 40);
         con.fillText("Teki:" + teki.length, 20, 60);
+        con.fillText("Teta:" + teta.length, 20, 80);
     }
 }
 
