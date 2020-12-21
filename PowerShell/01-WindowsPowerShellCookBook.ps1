@@ -1,5 +1,5 @@
-# 続きはレシピ３．７から
-<# PowerShellの基本
+<# 次回は５章から
+PowerShellの基本
     Windows PowerShell インタラクティブシェル
         コマンドの基本は Verb-Noun
         pushd . 現在のロケーションをスタックに格納し、指定したディレクトリへ移動します。
@@ -57,9 +57,73 @@
             インスタンスを作成する
                 $obj = new-object system.random
                 $obj.nextdouble()
-
-
+            現在のオブジェクトがサポートするメソッドやプロパティを知りたい場合
+                $object | Get-Member
+            スタティックメソッドやスタティックプロパティを知りたい場合
+                $object | Get-Member -Static
     ループ処理とフロー制御
+        $temperature = 90
+        if($temperature -le 0){
+            "balmy Canadian Summer"
+        }
+        elseif($temperature -le 32) {
+            "Freezing"            
+        }
+        elseif($temperature -le 50){
+            "cold"
+        }
+        else{
+            "hot"
+        }
+
+        switch ($temperature) {
+            {$_ -lt 32} {"Below Freezing"; break}
+            32          {"Exactly Freezing";break}
+            {$_ -le 50} {"cold"; break}
+            Default     {"hot"}
+        }
+
+        for($i = 0; $i -le 10; $i++){
+            "Loop number $i"
+        }
+
+        foreach ($file in dir) {
+            "File length; " + $file.length
+        }
+
+        Get-ChildItem | ForEach-Object{"File length; " + $_.Length}
+
+        $response = ""
+        while ($response -ne "QUIT") {
+            $response = Read-Host "Type something"
+        }
+
+        $response1 = ""
+        do {
+            $response1 = Read-Host "Type something1"
+        } while ($response1 -ne "QUIT")
+
+        一時停止または遅延を追加する
+        Read-Host                       #エンターによる入力完了まで入力を受け付ける（待ちで使える）
+        $host.ui.RawUI.ReadKey()        #入力を受け付ける（待ちで利用できる）
+        Start-Sleep -Milliseconds 300   #時間指定で待ち
+
+        #一定の速度でループを実行（ループ内のコマンド完了までの時間を計測し、それから目的の時間との差を埋めて遅延させる
+        $loopDelayMilliseconds = 650
+        while($true){
+            $startTime = Get-Date
+
+            write-host "hello world"
+
+            $endTime = Get-Date
+            $loopLength = ($endTime - $startTime).totalmilliseconds
+            $timeRemaining = $loopDelayMilliseconds - $loopLength
+
+            if($timeRemaining -gt 0){
+                Start-Sleep -Milliseconds $timeRemaining
+            }
+        }
+        
     文字列と非構造化テキスト
     計算と算術
 一般的なタスク
