@@ -2,10 +2,28 @@
 class Tama extends CharaBase{
     constructor(x, y, vx, vy){
         super(5, x, y, vx, vy);
+        // this.w = 4;
+        // this.h = 6;
+        this.r = 4;
     }
 
     update(){
         super.update();
+
+        for (let i = 0; i < teki.length; i++){
+            if(!teki[i].kill){
+                if(checkHit(
+                    // this.x, this.y, this.w, this.h,
+                    this.x, this.y, this.r,
+                    // teki[i].x, teki[i].y, teki[i].w, teki[i].h
+                    teki[i].x, teki[i].y, teki[i].r
+                )) {
+                    teki[i].kill = true;
+                    this.kill = true;
+                    break;
+                }
+            }
+        }
     }
 
     draw(){
@@ -27,9 +45,9 @@ class Jiki {
     update(){
         if(key[32] && this.reload == 0){
             tama.push(new Tama(this.x + (4<<8), this.y-(10<<8),   0, -2000));   //arrayオブジェクトのメソッド"プッシュ"
-            tama.push(new Tama(this.x - (4<<8), this.y-(10<<8),   0, -2000));
+/*             tama.push(new Tama(this.x - (4<<8), this.y-(10<<8),   0, -2000));
             tama.push(new Tama(this.x + (8<<8), this.y-(10<<8),  80, -2000));
-            tama.push(new Tama(this.x - (8<<8), this.y-(10<<8), -80, -2000));
+            tama.push(new Tama(this.x - (8<<8), this.y-(10<<8), -80, -2000)); */
             this.reload = 4;
             if(++this.relo2 == 4){
                 this.reload = 20;

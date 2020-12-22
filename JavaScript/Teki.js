@@ -8,6 +8,9 @@ class Teki extends CharaBase{
     constructor(snum, x, y, vx, vy){
         super(snum, x, y, vx, vy);
         this.flag = false;
+        // this.w = 20;
+        // this.h = 20;
+        this.r = 10;
     }
 
     update(){

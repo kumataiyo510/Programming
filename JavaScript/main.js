@@ -1,4 +1,4 @@
-//次回は（https://www.youtube.com/watch?v=OdD0N3BV8mE)
+//次回は（https://www.youtube.com/watch?v=jsQm2fyr514）
 //デバッグのフラグ
 const DEBUG = true;
 
@@ -21,7 +21,7 @@ GAME_SPEED = 1000/60; //1秒(1000MS)を60で割ったもの、つまり60FPS
  */
 
  //画面サイズ
-const SCREEN_W = 180;
+const SCREEN_W = 320;
 const SCREEN_H = 320;
 
 //キャンバスサイズ
@@ -29,8 +29,8 @@ const CANVAS_W = SCREEN_W * 2;
 const CANVAS_H = SCREEN_H * 2;
 
 //フィールドサイズ
-const FIELD_W = SCREEN_W * 2;
-const FIELD_H = SCREEN_H * 2;
+const FIELD_W = SCREEN_W + 120;
+const FIELD_H = SCREEN_H + 40;
 
 //星の数
 const STAR_MAX = 300
