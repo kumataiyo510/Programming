@@ -1,4 +1,4 @@
-//次回は（https://www.youtube.com/watch?v=jsQm2fyr514）
+//次回は(https://www.youtube.com/watch?v=1AiN2gBGyM4)
 //デバッグのフラグ
 const DEBUG = true;
 
