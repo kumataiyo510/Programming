@@ -1,4 +1,4 @@
-次回は５章から
+次回は7章から
 PowerShellの基本
     Windows PowerShell インタラクティブシェル
         コマンドの基本は Verb-Noun
@@ -139,12 +139,58 @@ PowerShellの基本
         動的な情報を文字列に入れる
             $header = "report for Today"
             $string = "$header `n--"
-        または、変数よりも複雑な値を含めるには
-            $header = "report for Today"
-            $string = "$header `n('-' *  $header.length)"
-        サブ式を利用する
-
+            または、変数よりも複雑な値を含めるにはサブ式を利用する
+                $header = "report for Today"
+                $string = "$header `n$('-' *  $header.length)"
+        書式設定された情報（右揃えや特定の桁数での丸め数字）を文字列に配置したい #0は数量で8は右から8桁目、D4は十進数4桁で1は価格を表しcは通貨を表す
+            $formatString = "{0,8:D4} {1:C}'n"
+            $report  = "Quantity Price'n"
+            $report += "--------------'n"
+            $report += $formatString -f 50, 2.5677
+            $report += $formatString -f 3, 9
+            #以下結果
+            "@
+            Quantity Price
+            --------------
+                0050  \3
+                0003  \9
+"@
+        例2
+            $number1 = 10; $number2 = 32;
+            "{0} divied by {1} is {2}" -f $number2, $number1, ($number2 / $number1)
+            #結果 32 divided by 10 is 3.2
+        文字列検索
+            "hello world" -like "*llo w" #ワイルドカード利用可能（低機能単純４行でルールをかける）
+            "hello world" -match '.*l[l-z]o w.*$' #正規表現利用可能（高機能複雑使用規則で１冊の本ができる）
+            "hello world".contains("world") #結果はTrue
+            "hello world".IndexOf("world") #結果は6
+            #検索結果を変数に格納するとオブジェクトになるので検索がうまくできないことがある
+            $helpContent = Get-Help Get-ChildItem
+            $helpContent -match "場所" #結果はFalse
+            $helpContent = Get-Help Get-ChildItem | out-string
+            $helpContent -match "場所" #結果はTrue
+        文字列置換
+            "hello world".Replace("world", "powershell") #簡単な置換
+                #結果 hello powershell
+            "hello world" -replace '(.*) (.*)','$2 $1' #高度な置換（正規表現を利用可能）
+                #結果 world hello
+        空白や特定の文字の削除
+            "hello world".TrimEnd('d','l','r') #結果 heo wo
+        日付を比較するときはオブジェクト動詞を比較するように注意する
+        テキストデータのやり取りに使うコマンド
+            sed の置き換えで -replace #テキスト置換
+            grepの置き換えで select-string #テキスト検索
+        大きなレポートまたは大量のデータを生成するスクリプト
+            $files = Get-ChildItem c:\*.txt -recurse
+            $files | Out-File c:\temp\AllTextFiles.txt #1
+            Get-ChildItem c:\*.txt -recurse | out-file c:\temp\AllTextFiles.txt #2
+                2はストリーミング処理されるので1よりも早い処理が可能になる
     計算と算術
+        オブジェクトのリストの数値特性またはテキスト特性を測定したい
+        1..10 | measure-object -Average -Sum #数値特性
+        get-childitem | measure-object -p0roperty Length -max -min -average -sum #特定のプロパティの数値特性
+        get-content output.txt | measure-object -character -word -line #テキスト特性の測定
+
 一般的なタスク
     単純なファイル
     構造化ファイル
