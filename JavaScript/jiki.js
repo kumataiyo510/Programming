@@ -20,6 +20,9 @@ class Tama extends CharaBase{
                 )) {
                     teki[i].kill = true;
                     this.kill = true;
+
+                    explosion(teki[i].x, teki[i].y, teki[i].vx >> 3, teki[i].vy >> 3 );
+
                     break;
                 }
             }
@@ -39,15 +42,19 @@ class Jiki {
         this.anime  = 0;
         this.reload = 0;
         this.relo2  = 0;
+        this.r      = 10;
+        this.damage = 0;
     }
     
     //自機の移動
     update(){
+        if(this.damage)this.damage--;
+
         if(key[32] && this.reload == 0){
-            tama.push(new Tama(this.x + (4<<8), this.y-(10<<8),   0, -2000));   //arrayオブジェクトのメソッド"プッシュ"
-/*             tama.push(new Tama(this.x - (4<<8), this.y-(10<<8),   0, -2000));
-            tama.push(new Tama(this.x + (8<<8), this.y-(10<<8),  80, -2000));
-            tama.push(new Tama(this.x - (8<<8), this.y-(10<<8), -80, -2000)); */
+            tama.push(new Tama(this.x + (4<<8), this.y-(10<<8),    0, -2000));   //arrayオブジェクトのメソッド"プッシュ"
+            tama.push(new Tama(this.x - (4<<8), this.y-(10<<8),    0, -2000));
+            tama.push(new Tama(this.x + (8<<8), this.y-(10<<8),  400, -2000));
+            tama.push(new Tama(this.x - (8<<8), this.y-(10<<8), -400, -2000));
             this.reload = 4;
             if(++this.relo2 == 4){
                 this.reload = 20;

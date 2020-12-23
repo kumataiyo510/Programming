@@ -1,4 +1,4 @@
-<# 次回は５章から
+次回は５章から
 PowerShellの基本
     Windows PowerShell インタラクティブシェル
         コマンドの基本は Verb-Noun
@@ -125,6 +125,25 @@ PowerShellの基本
         }
         
     文字列と非構造化テキスト
+        展開文字列と非展開文字列
+            "hello world"  #展開文字列
+            'hello $world' #非展開（リテラル）文字列（変数が展開されずに処理される）
+        ヒア文字列
+            改行やその他の書式情報を含むテキストを格納する
+            $string = @"
+            この間はヒア文字列とし
+            て認識されるので
+"@
+        エスケープシーケンス
+            `を利用
+        動的な情報を文字列に入れる
+            $header = "report for Today"
+            $string = "$header `n--"
+        または、変数よりも複雑な値を含めるには
+            $header = "report for Today"
+            $string = "$header `n('-' *  $header.length)"
+        サブ式を利用する
+
     計算と算術
 一般的なタスク
     単純なファイル
@@ -157,4 +176,4 @@ PowerShellの基本
     WMIリファレンス
     便利なCOMオブジェクトとその使用法
     .NETの文字列書式
-    .NET DateTime書式指定子 #>
+    .NET DateTime書式指定子

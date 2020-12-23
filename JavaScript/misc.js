@@ -1,13 +1,3 @@
-//キーボードが押されたとき
-document.onkeydown = function(e){
-    key[e.keyCode] = true;
-}
-
-//キーボードが話されたとき
-document.onkeyup = function(e){
-    key[e.keyCode] = false;
-}
-
 //星クラス
 class Star {
     constructor() {
@@ -41,15 +31,18 @@ class Star {
 //キャラクターのベースクラス
 class CharaBase {
     constructor(snum, x, y, vx, vy){
-        this.sn   = snum;
-        this.x    = x;
-        this.y    = y;
-        this.vx   = vx;
-        this.vy   = vy;
-        this.kill = false;
+        this.sn    = snum;
+        this.x     = x;
+        this.y     = y;
+        this.vx    = vx;
+        this.vy    = vy;
+        this.kill  = false;
+        this.count = 0;
     }
 
     update() {
+        this.count++;
+
         this.x += this.vx;
         this.y += this.vy;
 
@@ -104,6 +97,45 @@ function rand(min, max){
     return true;
 } */
 
+//爆発のクラス
+class Expl extends CharaBase{
+    constructor(c, x, y, vx, vy){
+        super(0, x, y, vx, vy);
+        this.timer = c;
+    }
+
+    update(){
+        if(this.timer){
+            this.timer--;
+            return;
+        }
+        super.update()
+    }
+
+
+    draw(){
+        if(this.timer)return;
+        this.sn = 16 + this.count >> 2; //ビットシフトのほうが除算より早い
+        if(this.sn == 27){
+            this.kill = true;
+            return;
+        }
+        super.draw();
+    }
+}
+
+//もっと派手な爆発
+function explosion(x, y, vx, vy){
+    expl.push(new Expl(0, x, y, vx, vy));
+
+    for(let i = 0; i < 10; i++){
+        let evx = vx + (rand(-10,10) << 4);
+        let evy = vy + (rand(-10,10) << 4);
+
+        expl.push(new Expl(i, x, y, evx, evy));
+    }
+}
+
 //当たり判定
 function checkHit(x1, y1, r1, x2, y2, r2){
    //円同士の当たり判定
@@ -112,4 +144,14 @@ function checkHit(x1, y1, r1, x2, y2, r2){
    let r = r1 + r2;
 
    return r * r >= a * a + b * b;
+}
+
+//キーボードが押されたとき
+document.onkeydown = function(e){
+    key[e.keyCode] = true;
+}
+
+//キーボードが話されたとき
+document.onkeyup = function(e){
+    key[e.keyCode] = false;
 }
