@@ -190,9 +190,10 @@ PowerShellの基本
         1..10 | measure-object -Average -Sum #数値特性
         get-childitem | measure-object -p0roperty Length -max -min -average -sum #特定のプロパティの数値特性
         get-content output.txt | measure-object -character -word -line #テキスト特性の測定
-
 一般的なタスク
     単純なファイル
+        ファイルの中身を取得する
+            get-content 
     構造化ファイル
     インターネット対応スクリプト
     コードの再利用

@@ -97,3 +97,4 @@ git stash save <message>　//変更を退避する
 git stash list　//退避した作業の一覧
 git stash apply stash@{0}　//退避した作業を元に戻す　stash名を指定しないと直前のstashが戻される
 git stash drop stash@{0}　//stash下作業を削除する
+git reset --hard HEAD //編集・ステージングいずれの変更内容を取り消し、最後にコミットした状態に戻す
