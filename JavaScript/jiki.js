@@ -37,7 +37,7 @@ class Tama extends CharaBase{
 class Jiki {
     constructor(){
         this.x = (FIELD_W / 2)<<8;
-        this.y = (FIELD_H / 2)<<8;
+        this.y = (FIELD_H - 50) << 8;
         this.speed  = 512; //256で1Fに1pix動く
         this.anime  = 0;
         this.reload = 0;

@@ -1,4 +1,4 @@
-//次回は(https://www.youtube.com/watch?v=1AiN2gBGyM4)
+//次回は（https://www.youtube.com/watch?v=pMmzKb3CNN8）
 //デバッグのフラグ
 const DEBUG = true;
 
@@ -151,8 +151,10 @@ function putInfo(){
 //ゲームループ
 function gameLoop(){
     //テスト的に敵を出す
-    if(rand(0,10) == 1)
-    teki.push(new Teki(39, rand(0, FIELD_W)<<8, 0, 0, rand(300, 1200)));
+    if(rand(0,10) == 1){
+        let r = rand(0, 1);
+        teki.push(new Teki(r, rand(0, FIELD_W)<<8, 0, 0, rand(300, 1200)));
+    }
 
     updateAll();
     drawAll();
