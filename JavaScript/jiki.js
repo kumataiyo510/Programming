@@ -44,11 +44,16 @@ class Jiki {
         this.relo2  = 0;
         this.r      = 10;
         this.damage = 0;
+        this.muteki = 0;
+        this.count  = 0;
     }
     
     //自機の移動
     update(){
+        this.count++;
         if(this.damage)this.damage--;
+        if(this.muteki)this.muteki--;
+
 
         if(key[32] && this.reload == 0){
             tama.push(new Tama(this.x + (4<<8), this.y-(10<<8),    0, -2000));   //arrayオブジェクトのメソッド"プッシュ"
@@ -86,6 +91,7 @@ class Jiki {
     
     //自機の描画
     draw(){
+        if(this.muteki && (this.count & 1)) return;
         drawSprite(2 + (this.anime>>2), this.x, this.y);
     }
 }

@@ -9,7 +9,7 @@ class Teta extends CharaBase{
     update(){
         super.update();
 
-        if(!jiki.damage && checkHit(
+        if(!jiki.muteki && checkHit(
             // this.x, this.y, this.w, this.h,
             this.x, this.y, this.r,
             // teki[i].x, teki[i].y, teki[i].w, teki[i].h
@@ -17,6 +17,8 @@ class Teta extends CharaBase{
         )) {
             this.kill   = true;
             jiki.damage = 10;
+            jiki.muteki = 60;
+
         }
     }
 }
@@ -64,7 +66,7 @@ class Teki extends CharaBase{
 
         if(this.flag && this.vy > -800) this.vy -= 30;
 
-        if(!jiki.damage && checkHit(
+        if(!jiki.muteki && checkHit(
             // this.x, this.y, this.w, this.h,
             this.x, this.y, this.r,
             // teki[i].x, teki[i].y, teki[i].w, teki[i].h
@@ -72,6 +74,8 @@ class Teki extends CharaBase{
         )) {
             this.kill   = true;
             jiki.damage = 10;
+            jiki.muteki = 60;
+
         }
     }
     
