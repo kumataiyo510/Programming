@@ -1,7 +1,7 @@
 //弾クラス
 class Tama extends CharaBase{
     constructor(x, y, vx, vy){
-        super(5, x, y, vx, vy);
+        super(6, x, y, vx, vy);
         // this.w = 4;
         // this.h = 6;
         this.r = 4;
@@ -56,10 +56,10 @@ class Jiki {
 
 
         if(key[32] && this.reload == 0){
-            tama.push(new Tama(this.x + (4<<8), this.y-(10<<8),    0, -2000));   //arrayオブジェクトのメソッド"プッシュ"
-            tama.push(new Tama(this.x - (4<<8), this.y-(10<<8),    0, -2000));
-            tama.push(new Tama(this.x + (8<<8), this.y-(10<<8),  400, -2000));
-            tama.push(new Tama(this.x - (8<<8), this.y-(10<<8), -400, -2000));
+            tama.push(new Tama(this.x + (6<<8), this.y-(10<<8),    0, -2000));   //arrayオブジェクトのメソッド"プッシュ"
+            tama.push(new Tama(this.x - (6<<8), this.y-(10<<8),    0, -2000));
+            tama.push(new Tama(this.x + (8<<8), this.y-(5<<8),  200, -2000));
+            tama.push(new Tama(this.x - (8<<8), this.y-(5<<8), -200, -2000));
             this.reload = 4;
             if(++this.relo2 == 4){
                 this.reload = 20;
@@ -93,5 +93,9 @@ class Jiki {
     draw(){
         if(this.muteki && (this.count & 1)) return;
         drawSprite(2 + (this.anime>>2), this.x, this.y);
+
+        if(this.count & 1) return;
+        drawSprite(9 + (this.anime>>2), this.x, this.y + (30 << 8));
+
     }
 }

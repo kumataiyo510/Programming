@@ -20,6 +20,7 @@ class Teta extends CharaBase{
             jiki.muteki = 60;
 
         }
+        this.sn = 14 + ((this.count >> 3) & 1);
     }
 }
 
@@ -27,12 +28,13 @@ class Teta extends CharaBase{
 
 //敵クラスを親クラスを継承したクラスで作成
 class Teki extends CharaBase{
-    constructor(snum, x, y, vx, vy){
-        super(snum, x, y, vx, vy);
+    constructor(tnum, x, y, vx, vy){
+        super(0, x, y, vx, vy);
         this.flag = false;
         // this.w = 20;
         // this.h = 20;
-        this.r = 10;
+        this.r    = 10;
+        this.tnum = tnum;
     }
 
     update(){
