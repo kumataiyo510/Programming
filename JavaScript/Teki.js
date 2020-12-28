@@ -9,15 +9,19 @@ class Teta extends CharaBase{
     update(){
         super.update();
 
-        if(!jiki.muteki && checkHit(
+        if(!gameOver && !jiki.muteki && checkHit(
             // this.x, this.y, this.w, this.h,
             this.x, this.y, this.r,
             // teki[i].x, teki[i].y, teki[i].w, teki[i].h
-            jiki.x, jiki.y, jiki.r
-        )) {
+            jiki.x, jiki.y, jiki.r)) {
             this.kill   = true;
-            jiki.damage = 10;
-            jiki.muteki = 60;
+
+            if((jiki.hp -= 30) <= 0){
+                gameOver = true;
+            } else {
+                jiki.damage = 10;
+                jiki.muteki = 60;
+            }
 
         }
         this.sn = 14 + ((this.count >> 3) & 1);
@@ -28,13 +32,13 @@ class Teta extends CharaBase{
 
 //敵クラスを親クラスを継承したクラスで作成
 class Teki extends CharaBase{
-    constructor(tnum, x, y, vx, vy){
+    constructor(t, x, y, vx, vy){
         super(0, x, y, vx, vy);
+        this.tnum = tekiMaster[t].tnum;
+        this.r    = tekiMaster[t].r;
+        this.hp   = tekiMaster[t].hp;
+        this.score= tekiMaster[t].score;
         this.flag = false;
-        // this.w = 20;
-        // this.h = 20;
-        this.r    = 10;
-        this.tnum = tnum;
     }
 
     update(){
@@ -45,21 +49,26 @@ class Teki extends CharaBase{
         tekiFunc[this.tnum](this);
 
         //当たり判定
-        if(!jiki.muteki && checkHit(
+        if(!gameOver && !jiki.muteki && checkHit(
             // this.x, this.y, this.w, this.h,
             this.x, this.y, this.r,
             // teki[i].x, teki[i].y, teki[i].w, teki[i].h
-            jiki.x, jiki.y, jiki.r
-        )) {
+            jiki.x, jiki.y, jiki.r)) {
             this.kill   = true;
-            jiki.damage = 10;
-            jiki.muteki = 60;
 
+            if((jiki.hp -= 30) <= 0){
+                gameOver = true;
+            } else {
+                jiki.damage = 10;
+                jiki.muteki = 60;
+            }
         }
     }
 }
 
+//弾を自機に向けて発射する
 function tekiShot(obj, speed){
+    if(gameOver)return;
     let an, dx, dy;
     an = Math.atan2(jiki.y - obj.y, jiki.x - obj.x); //自機への角度を求める
 

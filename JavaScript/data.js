@@ -1,3 +1,19 @@
+//敵マスター
+class TekiMaster{
+	constructor(tnum, r, hp, score){
+		this.tnum  = tnum;
+		this.r     = r;
+		this.hp    = hp;
+		this.score = score;
+	}
+}
+
+let tekiMaster = [
+	new TekiMaster(0, 10,   1, 100),   //0ピンクのひよこ
+	new TekiMaster(1, 10,   1, 100)    //1きいろのひよこ
+];
+
+
 //スプライトクラス
 class Sprite {
     constructor (x, y, w, h){

@@ -149,6 +149,12 @@ function checkHit(x1, y1, r1, x2, y2, r2){
 //キーボードが押されたとき
 document.onkeydown = function(e){
     key[e.keyCode] = true;
+    if(gameOver && e.keyCode == 82){
+        delete jiki;
+        jiki = new Jiki();
+        gameOver = false;
+        score = 0;
+    }
 }
 
 //キーボードが話されたとき

@@ -18,11 +18,15 @@ class Tama extends CharaBase{
                     // teki[i].x, teki[i].y, teki[i].w, teki[i].h
                     teki[i].x, teki[i].y, teki[i].r
                 )) {
-                    teki[i].kill = true;
                     this.kill = true;
 
-                    explosion(teki[i].x, teki[i].y, teki[i].vx >> 3, teki[i].vy >> 3 );
-
+                    if((teki[i].hp -= 10) <= 0){
+                        teki[i].kill = true;
+                        explosion(teki[i].x, teki[i].y, teki[i].vx >> 3, teki[i].vy >> 3 );
+                        score += teki[i].score;
+                    } else {
+                        expl.push(new Expl(0, teki[i].x, teki[i].y, 0, 0));
+                    }
                     break;
                 }
             }
@@ -36,8 +40,10 @@ class Tama extends CharaBase{
 
 class Jiki {
     constructor(){
-        this.x = (FIELD_W / 2)<<8;
-        this.y = (FIELD_H - 50) << 8;
+        this.x  = (FIELD_W / 2)<<8;
+        this.y  = (FIELD_H - 50) << 8;
+        this.mhp = 100;
+        this.hp = this.mhp;
         this.speed  = 512; //256で1Fに1pix動く
         this.anime  = 0;
         this.reload = 0;
