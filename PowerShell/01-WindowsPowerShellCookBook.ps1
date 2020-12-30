@@ -256,13 +256,14 @@ PowerShellの基本
             }
             fanctionName hikisu #関数の呼び出し
         スクリプト、関数、スクリプトブロックからデータを返す
-            コレクション（配列やArrayList）などから出力パイプラインに書き出す際には、コレクションの状態を保つにはコレクションを戻す際にコレクション名の前にカンマ(,)をつける
+            #コレクション（配列やArrayList）などから出力パイプラインに書き出す際には、コレクションの状態を保つにはコレクションを戻す際にコレクション名の前にカンマ(,)をつける
             function WriteArrayList {
                 $arrayList = New-Object System.Collections.ArrayList
                 [void]$arrayList.Add("Hello")                
                 [void]$arrayList.Add("world")
                 ,$arrayList
             }
+            WriteArrayList
 
     リスト、配列、ハッシュテーブル
     ユーザーとの対話
