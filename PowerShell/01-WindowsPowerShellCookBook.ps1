@@ -193,10 +193,77 @@ PowerShellの基本
 一般的なタスク
     単純なファイル
         ファイルの中身を取得する
-            get-content 
+            get-content ファイル名　#一行ずつ処理され、それぞれに情報が付加される（オブジェクトとして）
+            get-content [system.io.file]::ReadAllText("ファイル名") #ファイルをすべて読みだして処理する
+        ファイルから文字列または正規表現を検索する
+            Select-String -Simple 検索内容 ファイル名
+            Select-String "\(...|) ...-...." ファイル名 #正規表現を利用
+            Get-ChildItem | Where { $_ | Select-String "Debug" -Quiet}
+        テキストベースのファイルの解析と管理
+            convert-textobject　#を利用する
+        一時ファイルを作成する
+            [system.io.path]::GetTempFileName() #を利用する
+        ファイル内でテキストの検索／置換を行う（基本形）
+            $filename    = "filename.txt"
+            $match       = "source text"
+            $replacement = "replacement text" 
+            $content = Get-Content $filename
+            $content = $content -creplace $match, $replacement
+            $content | Set-Content $filename
     構造化ファイル
+        xmlファイルの情報へのアクセスと処理を行いたい
+            xmlファイルへキャストする
+                $xml = [xml](get-content powershell_blog.sml) #この型であれば、プロパティへアクセスするように、またメソッドのようにデータへアクセス可能
+            xmlファイルのデータを修正する
+                $filename = (get-item phone.xml).FullName
+                Get-Content $filename
+                <AddressBook>
+                  <Person contactType="Personal">
+                    <Name>Lee</Name>
+                    <Phone type="home">555-1212</Phone>
+                    <Phone type="work">555-1213</Phone>
+                  </Person>
+                  <Person contactType="Personal">
+                    <Name>Ariel</Name>
+                    <Phone>555-1234</Phone>
+                  </Person>
+                </AddressBook>
+                $phoneBook = [xml](get-content $filename)
+                $person = $phoneBook.AddressBook.Person[0]
+                $person.Phone[0]."#text" = "555-1214"
+                $person.Phone[0].type = "mobile"
+                $newNumber = [xml]'<Phone type="home">555-1215</Phone>'
+                $newNode  = $phoneBook.ImportNode($newNumber.Phone, $true)
+                [void]$person.AppendChild($newNode)
+                $phoenBook.Save($filename)
     インターネット対応スクリプト
+        インターネットからファイルをダウンロードする #downloadfileメソッドを使用※ユーザーエージェント（ブラウザ情報）やプロキシ、資格情報を指定も可能
+            $source = "http://www.leeholmes.com/favicon.ico"
+            $destination = "c:\temp\favicon.ico"
+            $wc = New-Object System.Net.WebClient
+            $wc.DownloadFile($source, $destination)
+        インターネットからWebページをダウンロードする
+            System.Net.WebClientクラスのDownloadString()メソッドを使用
+        コマンド出力をWebページとしてエクスポートする
+            $filename = "c:\temp\help.html"
+            $commands = Get-Command | where {$_.CommandType -ne "alias"}
+            $summary = $commands | Get-Help | select name,synopsis
+            $summary |ConvertTo-Html | Set-Content $filename
     コードの再利用
+        関数を記述する
+            function functionName (hikisu){
+                statement
+            }
+            fanctionName hikisu #関数の呼び出し
+        スクリプト、関数、スクリプトブロックからデータを返す
+            コレクション（配列やArrayList）などから出力パイプラインに書き出す際には、コレクションの状態を保つにはコレクションを戻す際にコレクション名の前にカンマ(,)をつける
+            function WriteArrayList {
+                $arrayList = New-Object System.Collections.ArrayList
+                [void]$arrayList.Add("Hello")                
+                [void]$arrayList.Add("world")
+                ,$arrayList
+            }
+
     リスト、配列、ハッシュテーブル
     ユーザーとの対話
     トレースとエラー管理
