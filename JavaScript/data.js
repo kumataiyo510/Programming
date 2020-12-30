@@ -9,8 +9,12 @@ class TekiMaster{
 }
 
 let tekiMaster = [
-	new TekiMaster(0, 10,   1, 100),   //0ピンクのひよこ
-	new TekiMaster(1, 10,   1, 100)    //1きいろのひよこ
+	new TekiMaster(0, 10,     1, 100),   //0ピンクのひよこ
+	new TekiMaster(1, 10,     1, 100),   //1きいろのひよこ
+	new TekiMaster(2, 70,  5000, 10000), //2ボスひよこ
+	new TekiMaster(3, 10,     1, 10)     //3ボスひよこの子供
+
+
 ];
 
 
