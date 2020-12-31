@@ -1,4 +1,4 @@
-次回は7章から
+次回は12章から
 PowerShellの基本
     Windows PowerShell インタラクティブシェル
         コマンドの基本は Verb-Noun
@@ -264,8 +264,32 @@ PowerShellの基本
                 ,$arrayList
             }
             WriteArrayList
-
     リスト、配列、ハッシュテーブル
+        配列の作り方 #配列とリストの違いは、配列はあらかじめメモリを確保して連続した番地へ記録（軽いが、追加等が難しい）、リストはポインタでデータをつなげる（重いが、追加等が簡単）
+            $myArray = 1, 2, "hello world"
+            $myArray = new-object string[] 10 #特定のサイズ
+            $myArray = new-object System.Collections.ArrayList
+        リストの作り方
+            $myArray = Get-Process
+        ジャグ配列と多次元配列 #ジャグ配列は配列に配列を入れる、多次元配列は配列の中にすべての情報が入っている
+            $jagged = @(
+                (1,2,3,4),
+                (5,6,7,8)
+            )
+
+            $multidimensional = new-object "int32[,]" 2,4
+        比較演算子
+            -cointains 含まれているかの真偽を図る
+            -like ワイルドカード
+            -match 正規表現
+        配列の要素の検索
+            $array -eq "Item 1" #-like -matchも可能
+        ハッシュテーブルの作成
+            $myHashTable = @{key1 = "value1"; key2 = 1, 2, 3; key3 = 5}
+        ハッシュテーブルの要素へ順番にアクセスする #ハッシュテーブルは順番の概念を持っていないので、すべてにアクセスするためにgetenumeratorメソッドが用意されている
+            foreach($item in $myHashTable.GetEnumerator() | sort name){
+                $item.value
+            }
     ユーザーとの対話
     トレースとエラー管理
     実行環境の認識
