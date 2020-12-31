@@ -4,7 +4,7 @@ class Star {
         this.x  = rand(0, FIELD_W)<<8;  //8ビットシフト（左）：下8ビット（右側256）は浮動小数点で256で1となる
         this.y  = rand(0, FIELD_H)<<8;
         this.vx = 0;
-        this.vy = rand(30,200);
+        this.vy = rand(100, 300);
         this.sz = rand(1,2);
     }
     draw(){
@@ -19,8 +19,8 @@ class Star {
         vcon.fillRect(this.x>>8, this.y>>8, this.sz, this.sz);        
     }
     update(){
-        this.x += this.vx;
-        this.y += this.vy;
+        this.x += this.vx * starSpeed / 100;
+        this.y += this.vy * starSpeed / 100;
         if(this.y > FIELD_H <<8){
             this.y = 0;
             this.x = rand(0, FIELD_W)<<8;
@@ -46,8 +46,8 @@ class CharaBase {
         this.x += this.vx;
         this.y += this.vy;
 
-        if(    this.x < 0 || this.x > FIELD_W<<8
-            || this.y < 0 || this.y > FIELD_H<<8)this.kill = true;
+        if(    this.x + (100 << 8) < 0 || this.x - (100 << 8) > FIELD_W<<8
+            || this.y + (100 << 8) < 0 || this.y - (100 << 8) > FIELD_H<<8)this.kill = true;
     }
 
     draw(){
@@ -115,7 +115,7 @@ class Expl extends CharaBase{
 
     draw(){
         if(this.timer)return;
-        this.sn = 16 + this.count >> 2; //ビットシフトのほうが除算より早い
+        this.sn = 16 + (this.count >> 2); //ビットシフトのほうが除算より早い
         if(this.sn == 27){
             this.kill = true;
             return;
