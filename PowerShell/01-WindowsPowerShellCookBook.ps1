@@ -1,4 +1,4 @@
-次回は12章から
+次回は１４章から
 PowerShellの基本
     Windows PowerShell インタラクティブシェル
         コマンドの基本は Verb-Noun
@@ -291,7 +291,38 @@ PowerShellの基本
                 $item.value
             }
     ユーザーとの対話
+        ユーザーからの入力を使用したい
+            read-host "enter a directory name"
+        単一のキーストロークを取得したい
+            $key = [console]::readkey($true)
+            $key
+            よりインタラクティブな場合
+                $key = $host.ui.RawUI.ReadKey("Noecho,IncludeKeyDown")
+                $key
+                $key.
+        出力
+            write-host
+            write-output
+        デバッグ情報の出力
+            write-debug
+        タスクに対するステータス情報を表示
+            write-progress
+        ホストのユーザーインターフェイスの機能にアクセスする #ui変数から利用する
+            $host.ui.rawui.windowtitle = (get-location)
     トレースとエラー管理
+        エラーへのアクセス
+            $error[0]  #最新のエラーが格納されている
+        エラー制御
+            メッセージを無視する #$warningPreference変数を設定する
+                $warningPreference = "SilentlyContinue"        #無視
+            終了しないエラーに対する制御 #$errorActionPreference変数を設定する
+                $errorActionPreference = "silentlyContinue"    #無視
+            終了するエラーに対する制御   #trapステートメントを利用
+                $trap [dividebyzeroexception] {"Dont't devide by zero!"; continue}
+            警告、エラー、終了するエラーを出力
+                write-warning #警告
+                write-error   #エラーが発生したが処理実行を続ける
+                throw         #エラー発生し、処理も中断する               
     実行環境の認識
     Windows PowerShellの適用範囲を広げる
     セキュリティとスクリプト署名
