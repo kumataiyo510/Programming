@@ -20,6 +20,7 @@
 - coflict マージの際に、リモートとローカルで同じファイルの同じ個所に対して修正がされており、自動でマージできないこと。両方の修正を合わせた内容に手動で編集する必要がある。マージをした際に、それぞれのファイルが編集されており衝突が起きている。
 - master masterブランチの事
 - head カレントブランチを指すポインタ
+- タグとは、コミットを参照しやすくするためにつけるもので、軽量タグと注釈付きタグがある
 
 ## origin/master とは
 
@@ -103,7 +104,14 @@ git stash apply stash@{0}　//退避した作業を元に戻す　stash名を指
 git stash drop stash@{0}　//stash下作業を削除する
 git reset --hard HEAD //編集・ステージングいずれの変更内容を取り消し、最後にコミットした状態に戻す
 git pull //リモートリポジトリーからローカルリポジトリーを更新する fetch + merge
-
+git tag <tagname>  //軽量タグのつけ方
+git tag -a <tagname>  //注釈付きタグの追加方法
+git tag -n タグの一覧とコメントの表示
+git tag -d タグの削除
+git commmit --amend 直前のコミットの修正
+git revert <revision> 過去のコミットを打ち消す
+git reset <--hard> <HEAD~~> コミットを捨てる<二世代分消す>
+cherry-pick コミットを抜き取る
 
 リポジトリ ⇔ commit ⇔ インデックス ⇔ add ⇔ ワークツリー
 基本の流れ push → error → merge(rebase) → push
