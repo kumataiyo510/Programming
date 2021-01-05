@@ -1,4 +1,4 @@
-次回は２２章から
+付録以外は読破完了
 PowerShellの基本
     Windows PowerShell インタラクティブシェル
         コマンドの基本は Verb-Noun
