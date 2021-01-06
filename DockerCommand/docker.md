@@ -15,7 +15,8 @@
 イメージからコンテナを作成する（ビルドする）<br><br>
 # Docker-compose
 複数のコンテナを管理する  
-docker-compose.ymlで管理する
+docker-compose.ymlで管理する<br>
+ただし、単体のコンテナであってもdocker-compose.ymlを利用してビルドすることは可能、その場合はDockerfileではなく、docker-compose.ymlによって設定はビルドされる
 
 docker pull  
 docker run  
