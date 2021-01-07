@@ -1,4 +1,4 @@
-// 次回（https://www.youtube.com/watch?v=Zh7Xjkbacoo）
+// 次回（https://www.youtube.com/watch?v=YHW26_3e7-U）
 const GAME_FPS = 1000 / 60;
 const SCREEN_SIZE_W = 256;
 const SCREEN_SIZE_H = 224;
@@ -39,48 +39,82 @@ let keyb = {};
 let oji_x  = 100<<4;
 let oji_y  = 100<<4;
 let oji_vx = 0;
+let oji_vy = 0;
 let oji_anime  =  0;
 let oji_sprite = 48;
 let oji_acount =  0;
 let oji_dir    =  0;
+let oji_jump   =  0;
+
+const ANIME_JUMP = 3;
 
 // 更新処理
 function update(){
+    // アニメ用のカウンタ
+    oji_acount++;
+    if(Math.abs(oji_vx) == 32)oji_acount++;
+    
+    // ジャンプ
+    if(keyb.ABUTTON){
+        if(oji_jump == 0){
+            oji_anime = ANIME_JUMP;
+            oji_jump = 1;
+            oji_vy = -64;
+        }
+    }
+
+    // 重力
+    if(oji_vy < 64)oji_vy += 2;
+
+    //床にぶつかる
+    if(oji_y > 150<<3){
+        oji_jump = 0;
+        oji_vy = 0;
+        oji_y = 150<<3;
+    }
+    // 横移動
     if(keyb.left){
         if(oji_anime == 0)oji_acount = 0;
-        oji_anime = 1;
+        if(!oji_jump)oji_anime = 1;
         oji_dir   = 1;
         if(oji_vx > -32)oji_vx -= 1;
         if(oji_vx > 0) oji_vx -= 1;
-        if(oji_vx > 8)oji_anime = 2;
+        if(!oji_jump && oji_vx > 8)oji_anime = 2;
     } else if(keyb.right){
         if(oji_anime == 0)oji_acount = 0;
-        oji_anime = 1;
+        if(!oji_jump)oji_anime = 1;
         oji_dir   = 0;
         if(oji_vx <  32)oji_vx += 1;
         if(oji_vx < 0) oji_vx += 1;
-        if(oji_vx < -8)oji_anime = 2;
+        if(!oji_jump && oji_vx < -8)oji_anime = 2;
     } else {
         if(oji_vx > 0) oji_vx -= 1;
         if(oji_vx < 0) oji_vx += 1;
-        if(!oji_vx)    oji_anime = 0;
+        if(!oji_jump && !oji_vx)    oji_anime = 0;
     }
-    oji_acount++;
-    if(Math.abs(oji_vx) == 32)oji_acount++;
 
+
+    // スプライトの決定
     if(oji_anime == 0) oji_sprite = 0;
-    else if(oji_anime == 1) oji_sprite = 2 + ((oji_acount/6)%3);
+    else if(oji_anime == 1) oji_sprite = 2 + ((oji_acount/6)%3);    //アニメーションの繰り返し%3(2,3,4,2,3,4) /6はスピードを落としている
     else if(oji_anime == 2) oji_sprite = 5;
+    else if(oji_anime == ANIME_JUMP) oji_sprite = 6;
+
+    // 左向きの時は＋４８を使う
     if(oji_dir)oji_sprite += 48;
+
+    // 実際に座標を変えている
     oji_x += oji_vx;
+    oji_y += oji_vy;
 }
 
+
+// スプライトの描画
 function drawSprite(snum, x, y){
-    let sx = (snum & 15) * 16;
+    let sx = (snum & 15) * 16;    //&15（1111） ビット演算子　サブネットマスク的な意味（サブネット表示では/4的な）であり16で割ることと同じである
     let sy = (snum >> 4) * 16;
     vcon.drawImage(chImg, sx, sy, 16, 32, x, y, 16, 32);
-    // console.log(snum);
-
+    // console.log(oji_y);
 }
 
 // 描画処理
@@ -136,11 +170,16 @@ function mainLoop(){
 // キーボードが押されたときに呼ばれる
 document.onkeydown = function(e){
     if(e.keyCode == 37)keyb.left = true;
-    if(e.keyCode == 39)keyb.right = true;  
+    if(e.keyCode == 39)keyb.right = true;
+    if(e.keyCode == 90)keyb.BBUTTON = true;
+    if(e.keyCode == 88)keyb.ABUTTON = true;
 }
 
 // キーボードが離されたときに呼ばれる
 document.onkeyup = function(e){
     if(e.keyCode == 37)keyb.left = false;
-    if(e.keyCode == 39)keyb.right = false;  
+    if(e.keyCode == 39)keyb.right = false;
+    if(e.keyCode == 90)keyb.BBUTTON = false;
+    if(e.keyCode == 88)keyb.ABUTTON = false;
+
 }
