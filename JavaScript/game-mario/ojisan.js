@@ -115,16 +115,18 @@ class Ojisan{
         this.y += this.vy;
 
         // 床にぶつかる（アニメを静止、移動も停止）
-        if(this.y > 150<<3){
+        if(this.y > 160<<4){
             if(this.anim == ANIME_JUMP)this.anim = ANIME_WALK;
             this.jump = 0;
             this.vy   = 0;
-            this.y    = 150<<3;
+            this.y    = 160<<4;
         }
     }
 
     // 毎フレームごとの描画処理
     draw(){
-        drawSprite(this.snum, this.x>>4, this.y>>4);
+        let px = (this.x >> 4 ) - field.scx;
+        let py = (this.y >> 4 ) - field.scy;
+        drawSprite(this.snum, px, py);
     }
 }

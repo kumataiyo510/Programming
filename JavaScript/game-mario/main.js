@@ -1,7 +1,4 @@
-// 次回（https://www.youtube.com/watch?v=xshbtm3Qmyo）
-const GAME_FPS = 1000 / 60;
-const SCREEN_SIZE_W = 256;
-const SCREEN_SIZE_H = 224;
+// 次回（https://www.youtube.com/watch?v=1Biu2-Z0C1A）
 
 // 仮想キャンバス
 let vcan = document.createElement("canvas");
@@ -10,8 +7,8 @@ let vcon = vcan.getContext("2d");
 let can = document.getElementById("can");
 let con = can.getContext("2d");
 
-vcon.width  = SCREEN_SIZE_W;
-vcon.height = SCREEN_SIZE_H;
+vcan.width  = SCREEN_SIZE_W;
+vcan.height = SCREEN_SIZE_H;
 
 can.width  = SCREEN_SIZE_W * 2;
 can.height = SCREEN_SIZE_H * 2;
@@ -33,11 +30,15 @@ chImg.onload = draw;
 // キーボード
 let keyb = {};
 
-//おじさん作成
+// おじさん作成
 let ojisan = new Ojisan(100, 100)
+
+// フィールドを作る
+let field = new Field();
 
 // 更新処理
 function update(){
+    field.update();
     ojisan.update();
 }
 
@@ -46,7 +47,8 @@ function drawSprite(snum, x, y){
     let sx = (snum & 15) * 16;    //&15（1111） ビット演算子　サブネットマスク的な意味（サブネット表示では/4的な）であり16で割ることと同じである
     let sy = (snum >> 4) * 16;
     vcon.drawImage(chImg, sx, sy, 16, 32, x, y, 16, 32);
-    // console.log(oji_y);
+
+    // console.log(ojisan.y);
 }
 
 // 描画処理
@@ -55,6 +57,8 @@ function draw(){
     vcon.fillStyle = "#66AAFF";
     vcon.fillRect(0, 0, SCREEN_SIZE_W, SCREEN_SIZE_H);
 
+    // マップを表示
+    field.draw();
     // おじさんを表示
     ojisan.draw();
 
@@ -104,6 +108,10 @@ document.onkeydown = function(e){
     if(e.keyCode == 39)keyb.right = true;
     if(e.keyCode == 90)keyb.BBUTTON = true;
     if(e.keyCode == 88)keyb.ABUTTON = true;
+
+    if(e.keyCode == 65)field.scx--;
+    if(e.keyCode == 83)field.scx++;
+
 }
 
 // キーボードが離されたときに呼ばれる
