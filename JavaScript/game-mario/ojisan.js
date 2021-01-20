@@ -22,6 +22,21 @@ class Ojisan{
         this.jump = 0;
     }
 
+    checkFloor(){
+        if(this.vy <= 0)return;
+
+        let lx = (this.x >> 4);
+        let ly = ((this.y + this.vy) >> 4);
+
+        if(field.isBlock(lx +  1, ly + 31) ||
+           field.isBlock(lx + 14, ly + 31)){
+            if(this.anim == ANIME_JUMP)this.anim = ANIME_WALK;
+            this.jump = 0;
+            this.vy   = 0;
+            this.y    = ((((ly + 31) >> 4) << 4) - 32) << 4;
+        }
+    }
+
     // ジャンプ処理
     updateJump(){
         // ジャンプ
@@ -110,17 +125,20 @@ class Ojisan{
         // 重力（y値をプラス方向（下）へ加算し続ける）
         if(this.vy < 64)this.vy += GRAVITY;
 
+        this.checkFloor();
+
         // 実際に座標を変えている
         this.x += this.vx;
         this.y += this.vy;
 
-        // 床にぶつかる（アニメを静止、移動も停止）
+
+/*         // 床にぶつかる（アニメを静止、移動も停止）
         if(this.y > 160<<4){
             if(this.anim == ANIME_JUMP)this.anim = ANIME_WALK;
             this.jump = 0;
             this.vy   = 0;
             this.y    = 160<<4;
-        }
+        } */
     }
 
     // 毎フレームごとの描画処理

@@ -1,4 +1,4 @@
-// 次回（https://www.youtube.com/watch?v=1Biu2-Z0C1A）
+// 次回（https://www.youtube.com/watch?v=JhKdSD39lzs）
 
 // 仮想キャンバス
 let vcan = document.createElement("canvas");
