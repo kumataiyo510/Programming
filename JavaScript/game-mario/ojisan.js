@@ -22,10 +22,11 @@ class Ojisan{
         this.jump = 0;
     }
 
+    // 床の判定
     checkFloor(){
         if(this.vy <= 0)return;
 
-        let lx = (this.x >> 4);
+        let lx = ((this.x + this.vx) >> 4);
         let ly = ((this.y + this.vy) >> 4);
 
         if(field.isBlock(lx +  1, ly + 31) ||
@@ -34,6 +35,42 @@ class Ojisan{
             this.jump = 0;
             this.vy   = 0;
             this.y    = ((((ly + 31) >> 4) << 4) - 32) << 4;
+        }
+    }
+
+    // 天井の判定
+    checkCeil(){
+        if(this.vy >= 0)return;
+
+        let lx = ((this.x + this.vx) >> 4);
+        let ly = ((this.y + this.vy) >> 4);
+
+        if(field.isBlock((lx + 8), ly + 6)){
+            this.jump = 15;
+            this.vy   = 0;
+        }
+    }
+
+
+    // 横の壁の判定
+    checkWall(){
+        let lx = ((this.x + this.vx) >> 4);
+        let ly = ((this.y + this.vy) >> 4);
+
+        // 右側のチェック
+        if(field.isBlock(lx + 15, ly + 9) ||
+           field.isBlock(lx + 15, ly + 15) ||
+           field.isBlock(lx + 15, ly + 24)){
+            this.vx   = 0;
+            this.x   -= 8;
+        }
+        else
+        // 左側のチェック
+        if(field.isBlock(lx, ly + 9) ||
+           field.isBlock(lx, ly + 15) ||
+           field.isBlock(lx, ly + 24)){
+            this.vx   = 0;
+            this.x   += 8;
         }
     }
 
@@ -125,7 +162,14 @@ class Ojisan{
         // 重力（y値をプラス方向（下）へ加算し続ける）
         if(this.vy < 64)this.vy += GRAVITY;
 
+        // 横の壁のチェック
+        this.checkWall();
+
+        // 床のチェック
         this.checkFloor();
+
+        // 天井のチェック
+        this.checkCeil();
 
         // 実際に座標を変えている
         this.x += this.vx;
