@@ -1,4 +1,4 @@
-// 次回（https://www.youtube.com/watch?v=27rFkfczcU8）
+// 次回（https://www.youtube.com/watch?v=t8DTgki63gI）
 
 // 仮想キャンバス
 let vcan = document.createElement("canvas");
@@ -36,9 +36,22 @@ let ojisan = new Ojisan(100, 100)
 // フィールドを作る
 let field = new Field();
 
+// ブロックのオブジェクト
+let block = [];
+
+
 // 更新処理
 function update(){
+    // マップの更新
     field.update();
+
+    // スプライトのブロックを更新
+    for(let i = block.length - 1;i >= 0; i--){
+        block[i].update();
+        if(block[i].kill)block.splice(i, 1);
+    }
+
+    // おじさんの更新
     ojisan.update();
 }
 
@@ -59,6 +72,11 @@ function draw(){
 
     // マップを表示
     field.draw();
+
+    // スプライトのブロックを表示
+    for(let i = 0;i < block.length; i++)
+        block[i].draw();
+
     // おじさんを表示
     ojisan.draw();
 
@@ -109,8 +127,11 @@ document.onkeydown = function(e){
     if(e.keyCode == 90)keyb.BBUTTON = true;
     if(e.keyCode == 88)keyb.ABUTTON = true;
 
-    if(e.keyCode == 65)field.scx--;
-    if(e.keyCode == 83)field.scx++;
+    if(e.keyCode == 65){
+        block.push(new Block(368, 5, 5));
+    }
+    // if(e.keyCode == 65)field.scx--;
+    // if(e.keyCode == 83)field.scx++;
 
 }
 

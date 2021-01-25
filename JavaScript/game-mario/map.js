@@ -42,9 +42,9 @@ class Field{
     isBlock(x, y){
         let bl = fieldData[(y >> 4) * FIELD_SIZE_W + (x >> 4)]
 
-        if(bl < 368)return false;
+        if(bl < 368)return 0;
 
-        return blType[bl - 368] == 1;
+        return blType[bl - 368] == 1?bl:0;
     }
 
     // 更新処理
@@ -56,6 +56,8 @@ class Field{
 
     // ブロック一つ描画
     drawBlock(bl, px, py){
+        const anim = [0, 1, 2, 1, 0];
+        if(bl == 368)bl += anim[(frameCount >> 3) % 5]
         let sx = (bl & 15) * 16;    //&15（1111） ビット演算子　サブネットマスク的な意味（サブネット表示では/4的な）であり16で割ることと同じである
         let sy = (bl >> 4) * 16;
         vcon.drawImage(chImg, sx, sy, 16, 16, px, py, 16, 16);
