@@ -1,4 +1,4 @@
-// 次回（https://www.youtube.com/watch?v=t8DTgki63gI）
+// 次回（https://www.youtube.com/watch?v=ponwt-LIOHY）
 
 // 仮想キャンバス
 let vcan = document.createElement("canvas");
@@ -38,6 +38,17 @@ let field = new Field();
 
 // ブロックのオブジェクト
 let block = [];
+let item = [];
+
+function updateObj(obj){
+    // スプライトのブロックを更新
+    for(let i = obj.length - 1;i >= 0; i--){
+        obj[i].update();
+        if(obj[i].kill)obj.splice(i, 1);
+    }
+}
+
+
 
 
 // 更新処理
@@ -45,12 +56,9 @@ function update(){
     // マップの更新
     field.update();
 
-    // スプライトのブロックを更新
-    for(let i = block.length - 1;i >= 0; i--){
-        block[i].update();
-        if(block[i].kill)block.splice(i, 1);
-    }
-
+    updateObj(block);
+    updateObj(item);
+    
     // おじさんの更新
     ojisan.update();
 }
@@ -64,6 +72,13 @@ function drawSprite(snum, x, y){
     // console.log(ojisan.y);
 }
 
+function drawObj(obj){
+        // スプライトのブロックを表示
+        for(let i = 0;i < obj.length; i++)
+        obj[i].draw();
+}
+
+
 // 描画処理
 function draw(){
     // 画面を水色でクリア
@@ -73,9 +88,9 @@ function draw(){
     // マップを表示
     field.draw();
 
-    // スプライトのブロックを表示
-    for(let i = 0;i < block.length; i++)
-        block[i].draw();
+    // 
+    drawObj(block);
+    drawObj(item);
 
     // おじさんを表示
     ojisan.draw();
