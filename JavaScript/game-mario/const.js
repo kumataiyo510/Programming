@@ -24,6 +24,7 @@ class Sprite{
         this.y  = y<<8;
         this.vx = vx;
         this.vy = vy;
+        this.sz = 0;
 
         this.kill  = false;
         this.count = 0;
@@ -47,6 +48,9 @@ class Sprite{
         let sy = (an >> 4) * 16;
         let px = (this.x >> 4) - (field.scx);
         let py = (this.y >> 4) - (field.scy);
-        vcon.drawImage(chImg, sx, sy, 16, 16, px, py, 16, 16);
+        let s;
+        if(this.sz)s = this.sz;
+        else s = 16;
+        vcon.drawImage(chImg, sx, sy, 16, s, px, py, 16, s);
     }
 }
