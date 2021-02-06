@@ -35,6 +35,13 @@ class Item extends Sprite{
     update(){
 
         if(this.kill)return;
+        if(ojisan.kinoko)return;
+
+        if(checkHit(this, ojisan)){
+            ojisan.kinoko = 1;
+            this.kill = true;
+            return;
+        }
 
         if(++this.count <= 32){
             this.sz = (1 + this.count) >> 1;

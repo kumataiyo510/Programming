@@ -13,6 +13,8 @@ class Ojisan{
     constructor(x, y){
         this.x  = x<<4;
         this.y  = y<<4;
+        this.w  = 16;
+        this.h  = 32;
         this.vx = 0;
         this.vy = 0;
         this.anim = 0;
@@ -20,6 +22,8 @@ class Ojisan{
         this.acou = 0;
         this.dirc = 0;
         this.jump = 0;
+
+        this.kinoko = 0;
     }
 
     // 床の判定
@@ -167,6 +171,17 @@ class Ojisan{
 
     // 毎フレームごとの更新処理
     update(){
+        // キノコを取ったときのエフェクト
+        if(this.kinoko){
+            let anim = [32, 14, 32, 14, 32, 14, 0, 32, 14, 0];
+
+            this.snum = anim[this.kinoko >> 2];
+            this.h    = this.snum == 32?16:32;
+
+            if(this.dirc)this.snum += 48;
+            if(++this.kinoko == 40)this.kinoko = 0;
+            return;
+        }
         // アニメ用のカウンタ
         this.acou++;
         if(Math.abs(this.vx) == MAX_SPEED)this.acou++;
@@ -205,6 +220,15 @@ class Ojisan{
     draw(){
         let px = (this.x >> 4 ) - field.scx;
         let py = (this.y >> 4 ) - field.scy;
-        drawSprite(this.snum, px, py);
+
+        let sx = (this.snum & 15) * 16;    //&15（1111） ビット演算子　サブネットマスク的な意味（サブネット表示では/4的な）であり16で割ることと同じである
+        let sy = (this.snum >> 4) * 16;
+
+        let w = this.w;
+        let h = this.h;
+
+        py += (32 - h);
+
+        vcon.drawImage(chImg, sx, sy, w, h, px, py, w, h);
     }
 }
