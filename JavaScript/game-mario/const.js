@@ -15,30 +15,6 @@ const FIELD_SIZE_W = 256;
 const FIELD_SIZE_H = 14;
 
 //
-// 当たり判定
-//
-function checkHit(obj1, obj2){
-    // 物体１
-    let left1   = (obj1.x >> 4) + 2;
-    let right1  = left1 + obj1.w - 4;
-    let top1    = (obj1.y >> 4) + 5;
-    let bottom1 = top1 + obj1.h - 7;
-
-    // 物体２
-    let left2   = (obj2.x >> 4) + 2;
-    let right2  = left2 + obj2.w - 4;
-    let top2    = (obj2.y >> 4) + 5;
-    let bottom2 = top2 + obj2.h - 7;
-
-    return(
-        left1   <= right2  &&
-        right1  >= left2   &&
-        top1    <= bottom2 &&
-        bottom1 >= top2
-    );
-}
-
-//
 // スプライトの基本クラス
 //
 class Sprite{
@@ -46,6 +22,7 @@ class Sprite{
         this.sp = sp;
         this.x  = x << 8;
         this.y  = y << 8;
+        this.ay = 0;
         this.w  = 16;
         this.h  = 16;
         this.vx = vx;
@@ -55,6 +32,30 @@ class Sprite{
         this.kill  = false;
         this.count = 0;
     }
+
+    // 当たり判定
+
+    checkHit(obj){
+        // 物体１
+        let left1   = (this.x >> 4) + 2;
+        let right1  = left1 + this.w - 4;
+        let top1    = (this.y >> 4) + 5 + this.ay;
+        let bottom1 = top1 + this.h - 7;
+
+        // 物体２
+        let left2   = (obj.x >> 4) + 2;
+        let right2  = left2 + obj.w - 4;
+        let top2    = (obj.y >> 4) + 5 + obj.ay;
+        let bottom2 = top2 + obj.h - 7;
+
+        return(
+            left1   <= right2  &&
+            right1  >= left2   &&
+            top1    <= bottom2 &&
+            bottom1 >= top2
+        );
+    }
+
 
     // 更新処理
     update(){

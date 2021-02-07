@@ -9,12 +9,17 @@ const ANIME_JUMP  = 8;
 const GRAVITY     = 4;
 const MAX_SPEED   = 32;
 
+const TYPE_MINI = 1;
+const TYPE_BIG  = 2;
+const TYPE_FIRE = 4;
+
 class Ojisan{
     constructor(x, y){
         this.x  = x<<4;
         this.y  = y<<4;
+        this.ay = 16;
         this.w  = 16;
-        this.h  = 32;
+        this.h  = 16;
         this.vx = 0;
         this.vy = 0;
         this.anim = 0;
@@ -24,6 +29,7 @@ class Ojisan{
         this.jump = 0;
 
         this.kinoko = 0;
+        this.type = TYPE_MINI;
     }
 
     // 床の判定
@@ -32,9 +38,10 @@ class Ojisan{
 
         let lx = ((this.x + this.vx) >> 4);
         let ly = ((this.y + this.vy) >> 4);
+        let p = this.type == TYPE_MINI?2:0;
 
-        if(field.isBlock(lx +  1, ly + 31) ||
-           field.isBlock(lx + 14, ly + 31)){
+        if(field.isBlock(lx +  1 + p, ly + 31) ||
+           field.isBlock(lx + 14 - p, ly + 31)){
             if(this.anim == ANIME_JUMP)this.anim = ANIME_WALK;
             this.jump = 0;
             this.vy   = 0;
@@ -49,20 +56,24 @@ class Ojisan{
         let lx = ((this.x + this.vx) >> 4);
         let ly = ((this.y + this.vy) >> 4);
 
-        let bl;
+        let ly2 = ly + (this.type == TYPE_MINI?21:5);
 
-        if(bl=field.isBlock((lx + 8), ly + 6)){
+        let bl;
+        if(bl=field.isBlock((lx + 8), ly2)){
             this.jump = 15;
             this.vy   = 0;
 
             let x = (lx + 8) >> 4;
-            let y = (ly + 5) >> 4;
+            let y =    (ly2) >> 4;
 
             if(bl !== 371){
                 block.push(new Block(bl, x, y));
                 item.push(new Item(218, x, y, 0, 0));
             }
-            else {
+            else if(this.type == TYPE_MINI){
+                block.push(new Block(bl, x, y));
+            }
+            else{
                 block.push(new Block(bl, x, y, 1, 20, -60 ));
                 block.push(new Block(bl, x, y, 1, -20, -60 ));
                 block.push(new Block(bl, x, y, 1, 20, -20 ));
@@ -77,18 +88,22 @@ class Ojisan{
         let lx = ((this.x + this.vx) >> 4);
         let ly = ((this.y + this.vy) >> 4);
 
+        let p = this.type == TYPE_MINI?16 + 8:9;
+
         // 右側のチェック
-        if(field.isBlock(lx + 15, ly + 9) ||
+        if(field.isBlock(lx + 15, ly + p) ||
+            (this.type == TYPE_BIG && (
            field.isBlock(lx + 15, ly + 15) ||
-           field.isBlock(lx + 15, ly + 24)){
+           field.isBlock(lx + 15, ly + 24)))){
             this.vx   = 0;
             this.x   -= 8;
         }
         else
         // 左側のチェック
-        if(field.isBlock(lx, ly + 9) ||
+        if(field.isBlock(lx, ly + p) ||
+            (this.type == TYPE_BIG && (
            field.isBlock(lx, ly + 15) ||
-           field.isBlock(lx, ly + 24)){
+           field.isBlock(lx, ly + 24)))){
             this.vx   = 0;
             this.x   += 8;
         }
@@ -165,6 +180,9 @@ class Ojisan{
                 this.snum = 5;
                 break;
         }
+        // ちっちゃいおじさんの時は+32
+        if(this.type == TYPE_MINI)this.snum += 32;
+
         // 左向きの時は＋４８を使う
         if(this.dirc)this.snum += 48;
     }
@@ -179,7 +197,11 @@ class Ojisan{
             this.h    = this.snum == 32?16:32;
 
             if(this.dirc)this.snum += 48;
-            if(++this.kinoko == 40)this.kinoko = 0;
+            if(++this.kinoko == 40){
+                this.type = TYPE_BIG;
+                this.ay = 0;
+                this.kinoko = 0;
+            }
             return;
         }
         // アニメ用のカウンタ

@@ -37,7 +37,7 @@ class Item extends Sprite{
         if(this.kill)return;
         if(ojisan.kinoko)return;
 
-        if(checkHit(this, ojisan)){
+        if(this.checkHit(ojisan)){
             ojisan.kinoko = 1;
             this.kill = true;
             return;
