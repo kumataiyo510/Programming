@@ -1,4 +1,4 @@
-// 次回（https://www.youtube.com/watch?v=1LmFCT34AYU）
+// 次回なし2021/2/8（https://www.youtube.com/channel/UCF2Kl5aL-_vcwaNhUf7YqbA）
 
 // 仮想キャンバス
 let vcan = document.createElement("canvas");

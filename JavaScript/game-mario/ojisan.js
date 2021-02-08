@@ -66,9 +66,14 @@ class Ojisan{
             let x = (lx + 8) >> 4;
             let y =    (ly2) >> 4;
 
-            if(bl !== 371){
-                block.push(new Block(bl, x, y));
-                item.push(new Item(218, x, y, 0, 0));
+            if(bl == 374){
+                
+
+            }
+            else if(bl !== 371){
+                block.push(new Block(374, x, y));
+                // item.push(new Item(218, x, y, 0, 0, ITEM_KINO));
+                item.push(new Item(486, x, y, 0, 0, ITEM_KUSA));
             }
             else if(this.type == TYPE_MINI){
                 block.push(new Block(bl, x, y));
