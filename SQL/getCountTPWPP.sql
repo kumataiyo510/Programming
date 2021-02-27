@@ -1,3 +1,7 @@
+/*--------------------------------------------------
+-- 出力（No.016 週別プロジェクト別作成チケット枚数）
+--------------------------------------------------*/
+-- No.016
 USE bitnami_redmine
 
 SELECT
@@ -15,7 +19,7 @@ FROM
 GROUP BY
     CONCAT(YEAR(i.created_on), "-", RIGHT(CONCAT("00", MONTH(DATE_ADD(CONCAT(YEAR(i.created_on), "/1/1"), interval WEEK(i.created_on) * 7 day))), 2), "-", RIGHT(CONCAT("00", WEEK(i.created_on)), 3)),
     project_id
-INTO OUTFILE '<FILE PATH>'
+INTO OUTFILE '<FILE_PATH>'
 CHARACTER SET 'sjis'
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'

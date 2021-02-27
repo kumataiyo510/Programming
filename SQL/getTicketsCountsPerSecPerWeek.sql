@@ -1,4 +1,8 @@
-﻿USE bitnami_redmine;
+﻿/*--------------------------------------------------
+-- 出力（No.014 週別部署別問い合わせ件数）
+--------------------------------------------------*/
+-- No.014
+USE bitnami_redmine;
 
 SELECT
     "y-m-w", "value", "counts"
@@ -37,7 +41,7 @@ GROUP BY
         RIGHT(CONCAT("00", WEEK(i.created_on)), 3)
     ),
     vt.value
-INTO OUTFILE '<FILE PATH>'
+INTO OUTFILE '<FILE_PATH>'
 CHARACTER SET 'sjis'
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'

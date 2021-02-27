@@ -1,4 +1,8 @@
-﻿USE bitnami_redmine;
+﻿/*--------------------------------------------------
+-- 出力（No.011 週別作業種別完了チケットの実作業時間）
+--------------------------------------------------*/
+-- No.011
+USE bitnami_redmine;
 
 SELECT
     "y-m-w", "activity_name", "hours"
@@ -55,7 +59,7 @@ GROUP BY
         RIGHT(CONCAT("00", WEEK(hbtba.closed_on)), 3)
     ),
     hbtba.activity_id
-INTO OUTFILE '<FILE PATH>'
+INTO OUTFILE '<FILE_PATH>'
 CHARACTER SET 'sjis'
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'

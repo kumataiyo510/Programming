@@ -1,4 +1,9 @@
-USE bitnami_redmine
+/*--------------------------------------------------
+-- 出力（No.020 担当別プロジェクト別チケット数）
+--------------------------------------------------*/
+-- No.020
+-- No.017
+use bitnami_redmine
 
 SELECT
     "y-m-w", "assigned_name", "project_name", "created_ticket_count", "closed_ticket_count"
@@ -52,7 +57,7 @@ FROM
             CONCAT(YEAR(no002.closed_on), "-", RIGHT(CONCAT("00", MONTH(DATE_ADD(CONCAT(YEAR(no002.closed_on), "/1/1"), interval WEEK(no002.closed_on) * 7 day))), 2), "-", RIGHT(CONCAT("00", WEEK(no002.closed_on)), 3)),
             no002.assigned_to_id
     ) AS closed_table ON created_table.created_week = closed_table.closed_week AND created_table.assigned_to_id = closed_table.assigned_to_id
-INTO OUTFILE '<FILE PATH>'
+INTO OUTFILE '<FILE_PATH>'
 CHARACTER SET 'sjis'
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'

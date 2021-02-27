@@ -1,5 +1,5 @@
+-- No.017
 USE bitnami_redmine
-
 SELECT
     "y-m-w", "username", "created_ticket_count", "closed_ticket_count", "calc_tickets", "tickets_amount"
 
@@ -108,7 +108,7 @@ FROM
                     no002.assigned_to_id
             ) AS closed_table ON created_table.created_week = closed_table.closed_week AND created_table.assigned_to_id = closed_table.assigned_to_id
     )AS table1
-INTO OUTFILE '<FILE PATH>'
+INTO OUTFILE 'FILE_PATH'
 CHARACTER SET 'sjis'
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'

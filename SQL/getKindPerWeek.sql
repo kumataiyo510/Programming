@@ -1,4 +1,8 @@
-﻿USE bitnami_redmine;
+﻿/*--------------------------------------------------
+-- 出力（No.012 週別どういったチケット種別のチケット数になっているか）
+--------------------------------------------------*/
+-- No.012
+USE bitnami_redmine;
 
 SELECT
     "y-m-w", "value", "ticket_counts"
@@ -36,7 +40,7 @@ GROUP BY
         RIGHT(CONCAT("00", WEEK(i.created_on)), 3)
     ),
     cvft.value
-INTO OUTFILE '<FILE PATH>'
+INTO OUTFILE 'FILE_PATH'
 CHARACTER SET 'sjis'
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'

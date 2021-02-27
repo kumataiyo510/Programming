@@ -1,3 +1,7 @@
+/*--------------------------------------------------
+-- èoóÕÅiNo.019 íSìñï ì˙ï çÏã∆éûä‘ó\íËÅj
+--------------------------------------------------*/
+-- No.019
 USE bitnami_redmine
 SELECT
     "id", "project_name", "subject", "estimated_hours", "username", "start_date", "due_date", "interval", "hours_per_day", "done_ratio"
@@ -29,7 +33,7 @@ FROM
         ORDER BY
             start_date
     ) AS work_tbl
-INTO OUTFILE '<FILE PATH>'
+INTO OUTFILE '<FILE_PATH>'
 CHARACTER SET 'sjis'
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'

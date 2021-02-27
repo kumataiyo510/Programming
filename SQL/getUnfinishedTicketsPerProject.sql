@@ -1,9 +1,13 @@
-﻿USE bitnami_redmine;
+﻿/*--------------------------------------------------
+-- 出力（No.007 プロジェクト別未完了チケット情報）
+--------------------------------------------------*/
+-- No.007
+USE bitnami_redmine;
 
 SELECT
     "project_name", "unfinished_tickets", "estimated_hours", "spend_times", "remaining_times", "ratio"
 
-UNION
+UNION ALL
 
 SELECT
     *
@@ -75,7 +79,7 @@ FROM
     ORDER BY
         unfinished_tickets DESC
 ) AS finaltable
-INTO OUTFILE <FILE PATH>'
+INTO OUTFILE '<FILE_PATH>'
 CHARACTER SET 'sjis'
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'

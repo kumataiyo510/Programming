@@ -1,4 +1,8 @@
-﻿USE bitnami_redmine;
+﻿/*--------------------------------------------------
+-- 出力（No.006 週別チケット増減数 + 未完了チケット累計数）
+--------------------------------------------------*/
+-- No.006
+USE bitnami_redmine;
 
 SELECT
     "y-m-w", "finished_tickets", "fi_judo_tickets", "fi_nodo_tickets", "created_tickets", "cr_judo_tickets", "cr_nodo_tickets", "calc_tickets", "unfinish_tickets"
@@ -175,7 +179,7 @@ FROM
             ) AS no003
                 ON no003.yw3 = no004.yw4
     ) AS no005a
-INTO OUTFILE '<FILE PATH>'
+INTO OUTFILE '<FILE_PATH>'
 CHARACTER SET 'sjis'
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'

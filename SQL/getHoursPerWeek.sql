@@ -1,3 +1,7 @@
+/*--------------------------------------------------
+-- èoóÕÅiNo.009 èTï çHêîëùå∏êî + ó›åvçHêî + é¿çÏã∆éûä‘Åj
+--------------------------------------------------*/
+-- No.009
 USE bitnami_redmine;
 
 SELECT
@@ -10,7 +14,7 @@ SELECT
     no005a.estimated_hours,
     no005a.finished_hours,
     IFNULL(no010.finished_tickets_total_spend_time, 0)AS spended_hours,
-    ROUND((IFNULL(no010.finished_tickets_total_spend_time, 0) / no005a.finished_hours) * 100, 1) AS jitu_spended_ratio,
+    100 - ROUND((IFNULL(no010.finished_tickets_total_spend_time, 0) / no005a.finished_hours) * 100, 1) AS jitu_spended_ratio,
     no005a.calc_hours,
     (
         SELECT
@@ -188,7 +192,7 @@ FROM(
             )
     ) AS no010
         ON no010.yw10 = no005a.yw4
-INTO OUTFILE '<FILE PATH>'
+INTO OUTFILE 'FILE_PATH'
 CHARACTER SET 'sjis'
 FIELDS TERMINATED BY ','
 OPTIONALLY ENCLOSED BY '"'
