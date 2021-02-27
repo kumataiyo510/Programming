@@ -1,20 +1,20 @@
 ﻿# シート名一覧
-$second = "<FILENAME>"
-$third = "<FILENAME>"
-$forth = "<FILENAME>"
-$fifth = "<FILENAME>"
-$sixth = "<FILENAME>"
-$seventh = "<FILENAME>"
-$eighth = "<FILENAME>"
-$nineth = "<FILENAME>"
-$tenth = "<FILENAME>"
-$eleventh = "<FILENAME>"
+$second = "SHEET_NAME"
+$third  = "SHEET_NAME"
+$forth  = "SHEET_NAME"
+$fifth  = "SHEET_NAME"
+$sixth  = "SHEET_NAME"
+$seventh = "SHEET_NAME"
+$eighth  = "SHEET_NAME"
+$nineth  = "SHEET_NAME"
+$tenth   = "SHEET_NAME"
+$eleventh = "SHEET_NAME"
 
 # カレントパスを相対パスから絶対パスへ変換（後にエクセルファイルを開くための準備）
 $EXCELPATH = (Convert-Path ..\)
 
 # 読み取りファイル名の取得（絶対パス）
-$REPORTEXCEL = "$EXCELPATH\<FILENAME>"
+$REPORTEXCEL = "$EXCELPATH\<FILE_NAME>"
 
 # 新規エクセルオブジェクトの作成
 $excel = New-Object -ComObject Excel.Application
@@ -310,29 +310,29 @@ foreach($csv IN $csvlist){
 
     # シート別処理振り分け部
     switch($sn){
-        $seventh  { CreatePivot "<CHARTNAME>"1 2 3 }
+        $seventh  { CreatePivot "CHART_TITLE"1 2 3 }
         $eleventh { MakeGantt }
-        $fifth    { CreatePivot "<CHARTNAME>" 1 2 3 }
+        $fifth    { CreatePivot "CHART_TITLE" 1 2 3 }
         $third {
             $graph = @(@(0, 0), @(1, 4), @(1, 4), @(0, 0), @(0, 0), @(0, 0), @(1, 51))
-            DrawChart 1 "<CHARTNAME>" $graph
+            DrawChart 1 "CHART_TITLE" $graph
             $graph = @(@(0, 0), @(0, 0), @(0, 0), @(0, 0), @(1, 51), @(0, 0), @(0, 0))
-            DrawChart 2 "<CHARTNAME>" $graph
+            DrawChart 2 "CHART_TITLE" $graph
         }
-        $forth  { CreatePivot "<CHARTNAME>" 1 2 3 }
-        $nineth { CreatePivot "<CHARTNAME>" 1 2 3 4 0 6 }
-        $sixth  { CreatePivot "<CHARTNAME>" 1 2 3 }
+        $forth  { CreatePivot "CHART_TITLE" 1 2 3 }
+        $nineth { CreatePivot "CHART_TITLE" 1 2 3 4 0 6 }
+        $sixth  { CreatePivot "CHART_TITLE" 1 2 3 }
         $second {
             $graph = @(@(0, 0), @(1, 4), @(0, 0), @(0, 0), @(1, 4), @(0, 0), @(0, 0), @(0, 0), @(1, 51))
-            DrawChart 1 "<CHARTNAME>" $graph
+            DrawChart 1 "CHART_TITLE" $graph
             $graph = @(@(0, 0), @(0, 0), @(0, 0), @(0, 0), @(0, 0), @(1, 53), @(1, 53), @(0, 0), @(0, 0))
-            DrawChart 2 "<CHARTNAME>" $graph
+            DrawChart 2 "CHART_TITLE" $graph
         }
         $eighth {
             $graph = @(@(0, 0), @(0, 0), @(0, 0), @(0, 0), @(0, 0), @(1, 5))
-            DrawChart 1 "<CHARTNAME>" $graph
+            DrawChart 1 "CHART_TITLE" $graph
         }
-        $tenth { CreatePivot "<CHARTNAME>" 1 2 4 5 3 }
+        $tenth { CreatePivot "CHART_TITLE" 1 2 4 5 3 }
     }
 }
 # シートの移動
