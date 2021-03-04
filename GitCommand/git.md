@@ -116,12 +116,12 @@ git reset --hard \<commit>
 - git stash apply stash@{0}　//退避した作業を元に戻す　stash名を指定しないと直前のstashが戻される
 - git stash drop stash@{0}　//stash下作業を削除する
 - git reset --hard HEAD //編集・ステージングいずれの変更内容を取り消し、最後にコミットした状態に戻す
-- git tag <tagname>  //軽量タグのつけ方
-- git tag -a <tagname>  //注釈付きタグの追加方法
+- git tag \<tagname>  //軽量タグのつけ方
+- git tag -a \<tagname>  //注釈付きタグの追加方法
 - git tag -n タグの一覧とコメントの表示
 - git tag -d タグの削除
-- git revert <revision> 過去のコミットを打ち消す
-- git reset <--hard> <HEAD~~> コミットを捨てる<二世代分消す>
+- git revert \<revision> 過去のコミットを打ち消す
+- git reset <--hard> \<HEAD~~> コミットを捨てる<二世代分消す>
 - cherry-pick コミットを抜き取る
 - git merge branchName早送りできればする、無理なら普通のマージ
 - git merge --no-ff branchName   //常に普通のマージ（non fast-forward）
